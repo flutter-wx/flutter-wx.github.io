@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPFlutter 2.0 官方文档中心 (100% 本地离线镜像)</title>
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-sidebar: #f5f6f7;
+            --bg-header: #ffffff;
+            --border-color: #dee0e3;
+            --border-subtle: #ebedf0;
+            --text-primary: #1f2329;
+            --text-secondary: #646a73;
+            --text-tertiary: #8f959e;
+            --brand-color: #3370ff;
+            --brand-hover: #245bdb;
+            --brand-bg: #e1eaff;
+            --brand-light: #f0f4ff;
+            --code-bg: #1e1e1e;
+            --code-text: #e6e6e6;
+            --code-header-bg: #2d2d2d;
+            --code-border: #3c3c3c;
+            --callout-info-bg: #eef4fe;
+            --callout-info-border: #3370ff;
+            --callout-warn-bg: #fff8eb;
+            --callout-warn-border: #ff9800;
+            --table-header-bg: #f5f6f7;
+            --table-hover-bg: #f7f8fa;
+            --card-bg: #ffffff;
+            --card-border: #dee0e3;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --outline-hover: #f0f1f2;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #17181a;
+            --bg-sidebar: #1f2023;
+            --bg-header: #1f2023;
+            --border-color: #2d2f33;
+            --border-subtle: #25262a;
+            --text-primary: #f0f1f2;
+            --text-secondary: #9ea3ab;
+            --text-tertiary: #6b7078;
+            --brand-color: #4a89ff;
+            --brand-hover: #699fff;
+            --brand-bg: #1c2b4d;
+            --brand-light: #1f2838;
+            --code-bg: #141517;
+            --code-text: #f0f1f2;
+            --code-header-bg: #1e2024;
+            --code-border: #2d2f33;
+            --callout-info-bg: #182338;
+            --callout-info-border: #4a89ff;
+            --callout-warn-bg: #2d2112;
+            --callout-warn-border: #e68a00;
+            --table-header-bg: #232529;
+            --table-hover-bg: #282a2f;
+            --card-bg: #1f2023;
+            --card-border: #2d2f33;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+            --outline-hover: #282a2f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: var(--font-sans);
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background-color: var(--bg-body);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header Bar */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: var(--bg-header);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .header-logo-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #3370ff, #00d6b9);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 2px 6px rgba(51,112,255,0.3);
+        }
+
+        .header-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            background: #e1fbf4;
+            color: #008765;
+            border-radius: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(0,135,101,0.2);
+        }
+
+        [data-theme="dark"] .header-badge {
+            background: #0f3329;
+            color: #4ce2b8;
+            border-color: #174d3f;
+        }
+
+        .header-breadcrumbs {
+            margin-left: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-breadcrumbs span {
+            color: var(--text-tertiary);
+        }
+
+        .header-breadcrumbs strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .header-center {
+            flex: 1;
+            max-width: 460px;
+            margin: 0 24px;
+        }
+
+        .header-search-btn {
+            width: 100%;
+            height: 36px;
+            background: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-tertiary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .header-search-btn:hover {
+            border-color: var(--brand-color);
+            color: var(--text-secondary);
+            background: var(--bg-body);
+        }
+
+        .search-shortcut-badge {
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-header {
+            height: 34px;
+            padding: 0 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            background: var(--bg-body);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .btn-header:hover {
+            background: var(--bg-sidebar);
+            border-color: var(--brand-color);
+            color: var(--brand-color);
+        }
+
+        .btn-header-primary {
+            background: var(--brand-color);
+            border-color: var(--brand-color);
+            color: white;
+        }
+
+        .btn-header-primary:hover {
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
+            color: white;
+        }
+
+        .offline-status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #008765;
+            background: #e1fbf4;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        [data-theme="dark"] .offline-status-indicator {
+            background: #0f3329;
+            color: #4ce2b8;
+        }
+
+        .offline-dot {
+            width: 8px;
+            height: 8px;
+            background: #00b07c;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #00b07c;
+        }
+
+        /* App Container */
+        .app-container {
+            display: flex;
+            margin-top: 56px;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* Left Sidebar */
+        .app-sidebar {
+            width: 300px;
+            flex-shrink: 0;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            height: calc(100vh - 56px);
+            position: sticky;
+            top: 56px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+        }
+
+        .sidebar-filter-box {
+            padding: 14px 16px 10px;
+            position: sticky;
+            top: 0;
+            background: var(--bg-sidebar);
+            z-index: 10;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .sidebar-filter-input {
+            width: 100%;
+            height: 32px;
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0 10px;
+            font-size: 13px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .sidebar-filter-input:focus {
+            border-color: var(--brand-color);
+        }
+
+        .sidebar-tree {
+            padding: 10px 8px 30px;
+            flex: 1;
+        }
+
+        .chapter-group {
+            margin-bottom: 6px;
+        }
+
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: background 0.15s;
+        }
+
+        .chapter-header:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .chapter-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chapter-caret {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.2s;
+            fill: currentColor;
+        }
+
+        .chapter-group.collapsed .chapter-caret {
+            transform: rotate(-90deg);
+        }
+
+        .chapter-group.collapsed .chapter-items {
+            display: none;
+        }
+
+        .chapter-items {
+            padding-left: 12px;
+            margin-top: 2px;
+        }
+
+        .article-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            margin-bottom: 2px;
+            transition: all 0.15s;
+            position: relative;
+        }
+
+        .article-nav-item:hover {
+            background: var(--outline-hover);
+        }
+
+        .article-nav-item.active {
+            background: var(--brand-bg);
+            color: var(--brand-color);
+            font-weight: 600;
+        }
+
+        .article-nav-item.active::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 3px;
+            background: var(--brand-color);
+            border-radius: 2px;
+        }
+
+        .article-item-icon {
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .article-item-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Main Content View */
+        .app-main {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            justify-content: center;
+            background: var(--bg-body);
+        }
+
+        .article-container {
+            width: 100%;
+            max-width: 880px;
+            padding: 40px 48px 80px;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* Article Meta */
+        .article-meta-header {
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .article-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .badge-chapter {
+            font-size: 12px;
+            color: var(--brand-color);
+            background: var(--brand-bg);
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .badge-updated {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .article-h1-title {
+            font-size: 30px;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .article-stats-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Typography & Feishu Style */
+        .doc-heading {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 14px;
+            position: relative;
+            scroll-margin-top: 80px;
+        }
+
+        .doc-heading-h2 {
+            font-size: 22px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 8px;
+        }
+
+        .doc-heading-h3 {
+            font-size: 18px;
+        }
+
+        .doc-heading-h4 {
+            font-size: 15px;
+        }
+
+        .heading-anchor {
+            opacity: 0;
+            position: absolute;
+            left: -20px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .doc-heading:hover .heading-anchor {
+            opacity: 1;
+        }
+
+        .feishu-p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .feishu-link {
+            color: var(--brand-color);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(51,112,255,0.3);
+            transition: border-color 0.2s;
+        }
+
+        .feishu-link:hover {
+            border-bottom-color: var(--brand-color);
+        }
+
+        .inline-code {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            background: var(--bg-sidebar);
+            color: #d13438;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .inline-code {
+            color: #f87171;
+        }
+
+        .feishu-hr {
+            border: none;
+            height: 1px;
+            background: var(--border-color);
+            margin: 32px 0;
+        }
+
+        /* Lists */
+        .feishu-ul, .feishu-ol {
+            padding-left: 24px;
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .feishu-ul li, .feishu-ol li {
+            margin-bottom: 6px;
+        }
+
+        /* Code Block */
+        .feishu-code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid var(--code-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .code-block-bar {
+            background: var(--code-header-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 14px;
+            border-bottom: 1px solid var(--code-border);
+        }
+
+        .code-badge {
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-copy-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 4px;
+            color: #c0c0c0;
+            padding: 3px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .code-copy-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .feishu-code-block pre {
+            margin: 0;
+            padding: 16px;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 13.5px;
+            line-height: 1.65;
+            color: var(--code-text);
+        }
+
+        /* Callout Box */
+        .callout-card {
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 22px 0;
+            border-left: 4px solid var(--callout-info-border);
+            background: var(--callout-info-bg);
+        }
+
+        .callout-card.callout-important {
+            border-left-color: #3370ff;
+            background: var(--callout-info-bg);
+        }
+
+        .callout-card.callout-warning {
+            border-left-color: #ff9800;
+            background: var(--callout-warn-bg);
+        }
+
+        .callout-card.callout-tip {
+            border-left-color: #00b07c;
+            background: #e6f9f3;
+        }
+
+        [data-theme="dark"] .callout-card.callout-tip {
+            background: #0d3023;
+        }
+
+        .callout-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .callout-icon {
+            font-size: 16px;
+        }
+
+        .callout-content {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .callout-content p {
+            margin-bottom: 8px;
+        }
+
+        .callout-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* File Download Card */
+        .feishu-file-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 20px 0;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+        }
+
+        .feishu-file-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--brand-color);
+        }
+
+        .file-card-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .file-card-icon-wrap {
+            flex-shrink: 0;
+        }
+
+        .file-card-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+
+        .file-card-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .file-size-badge {
+            font-weight: 600;
+            color: var(--brand-color);
+        }
+
+        .file-card-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-card {
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-card-download {
+            background: var(--brand-color);
+            color: white;
+            border: 1px solid var(--brand-color);
+        }
+
+        .btn-card-download:hover {
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
+        }
+
+        .btn-card-browse {
+            background: var(--bg-sidebar);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-card-browse:hover {
+            background: var(--outline-hover);
+            border-color: var(--brand-color);
+            color: var(--brand-color);
+        }
+
+        /* Images */
+        .article-image-box {
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .zoomable-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+
+        .zoomable-img:hover {
+            transform: scale(1.01);
+        }
+
+        .image-caption {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            margin: 22px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feishu-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            text-align: left;
+        }
+
+        .feishu-table th {
+            background: var(--table-header-bg);
+            color: var(--text-secondary);
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .feishu-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+        }
+
+        .feishu-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .feishu-table tr:hover td {
+            background: var(--table-hover-bg);
+        }
+
+        /* Article Footer Pagination */
+        .article-footer-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+            gap: 16px;
+        }
+
+        .nav-btn-box {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            padding: 14px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--card-bg);
+            transition: all 0.2s;
+            max-width: 48%;
+            flex: 1;
+        }
+
+        .nav-btn-box:hover {
+            border-color: var(--brand-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .nav-btn-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brand-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Right Outline (TOC) */
+        .app-outline {
+            width: 240px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 56px;
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+            padding: 30px 16px;
+            user-select: none;
+        }
+
+        .outline-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            padding-left: 8px;
+        }
+
+        .outline-list {
+            list-style: none;
+        }
+
+        .outline-item {
+            margin-bottom: 2px;
+        }
+
+        .outline-link {
+            display: block;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.15s;
+        }
+
+        .outline-link:hover {
+            color: var(--text-primary);
+            background: var(--outline-hover);
+        }
+
+        .outline-link.active {
+            color: var(--brand-color);
+            font-weight: 600;
+            background: var(--brand-bg);
+        }
+
+        .outline-item.level-3 {
+            padding-left: 14px;
+        }
+
+        .outline-item.level-4 {
+            padding-left: 24px;
+        }
+
+        /* Toast notification */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1f2329;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+
+        .toast-msg.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Search Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 100px;
+            z-index: 200;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .search-modal-card {
+            width: 640px;
+            max-width: 90vw;
+            background: var(--bg-body);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 75vh;
+            animation: modalFadeIn 0.15s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .search-modal-input-wrap {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            gap: 12px;
+        }
+
+        .search-modal-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .search-modal-results {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .search-result-item {
+            padding: 12px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 4px;
+            transition: background 0.15s;
+        }
+
+        .search-result-item:hover, .search-result-item.selected {
+            background: var(--bg-sidebar);
+        }
+
+        .search-result-chapter {
+            font-size: 11px;
+            color: var(--brand-color);
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+
+        .search-result-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .search-result-snippet {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .search-result-snippet mark {
+            background: #fff3a8;
+            color: #7a5e00;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        [data-theme="dark"] .search-result-snippet mark {
+            background: #664d03;
+            color: #ffda6a;
+        }
+
+        .search-empty-state {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        .search-modal-footer {
+            padding: 10px 18px;
+            border-top: 1px solid var(--border-subtle);
+            background: var(--bg-sidebar);
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* Lightbox Modal */
+        .lightbox-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            cursor: zoom-out;
+        }
+
+        .lightbox-modal.open {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            cursor: default;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .app-outline {
+                display: none;
+            }
+            .article-container {
+                max-width: 760px;
+                padding: 30px 24px 60px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .app-sidebar {
+                position: fixed;
+                left: -300px;
+                z-index: 90;
+                transition: left 0.25s ease;
+            }
+            .app-sidebar.open {
+                left: 0;
+            }
+            .header-breadcrumbs {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <a href="#overview" class="header-logo" onclick="switchArticle('overview')">
+                <div class="header-logo-icon">MP</div>
+                <span>MPFlutter 2.0 文档中心</span>
+            </a>
+            <span class="header-badge">飞书官方镜像</span>
+            <div class="header-breadcrumbs" id="breadcrumbArea">
+                <span>/</span> <strong>MPFlutter 2.0 简介</strong>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <button class="header-search-btn" onclick="openSearchModal()">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <span>搜索 42 篇技术文档...</span>
+                </div>
+                <span class="search-shortcut-badge">⌘ K</span>
+            </button>
+        </div>
+
+        <div class="header-right">
+            <div class="offline-status-indicator" title="所有资源已完全本地化，无需联网即可浏览全部内容与代码">
+                <div class="offline-dot"></div>
+                <span>100% 离线就绪</span>
+            </div>
+            <a href="./awesome_project_275.zip" download class="btn-header btn-header-primary" title="下载 MPFlutter 2.0 官方工程模板 (2.2 MB)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                <span>下载模板 ZIP</span>
+            </a>
+            <button class="btn-header" onclick="toggleTheme()" title="切换浅色/深色主题" id="themeToggleBtn">
+                <span id="themeIcon">🌓</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="sidebar-filter-box">
+                <input type="text" class="sidebar-filter-input" id="sidebarFilter" placeholder="🔍 快速过滤目录..." oninput="filterSidebar(this.value)">
+            </div>
+            <nav class="sidebar-tree" id="sidebarNavTree">
+                <!-- Dynamically generated navigation tree -->
+            </nav>
+        </aside>
+
+        <!-- Main Article Container -->
+        <main class="app-main">
+            <article class="article-container" id="articleViewport">
+                <!-- Dynamically injected article content -->
+            </article>
+        </main>
+
+        <!-- Right Outline (Table of Contents) -->
+        <aside class="app-outline" id="outlineSidebar">
+            <div class="outline-title">本页目录</div>
+            <ul class="outline-list" id="outlineList">
+                <!-- Dynamically injected headings -->
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="modal-overlay" id="searchModal" onclick="closeSearchModal(event)">
+        <div class="search-modal-card" onclick="event.stopPropagation()">
+            <div class="search-modal-input-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-tertiary)"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" class="search-modal-input" id="modalSearchInput" placeholder="输入关键字搜索全文内容..." oninput="handleSearchQuery(this.value)" autofocus>
+            </div>
+            <div class="search-modal-results" id="searchResultsList">
+                <div class="search-empty-state">输入关键字即可实时全文检索 42 篇技术文章与代码段</div>
+            </div>
+            <div class="search-modal-footer">
+                <span>支持快捷键: <strong>↑</strong> <strong>↓</strong> 选择，<strong>Enter</strong> 打开</span>
+                <span><strong>ESC</strong> 关闭</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+
+    <!-- Toast message -->
+    <div class="toast-msg" id="toastMsg">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ce2b8" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>已复制到剪贴板</span>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const CHAPTERS_DATA = [{"id": "chap_overview", "title": "一、MPFlutter 2.0 简介", "icon": "🚅", "items": [{"id": "overview", "title": "MPFlutter 2.0 简介", "icon": "🚅", "file": "01_MPFlutter 2.0_TayPw6pxKiZGdxkNe4bcmSnNnSg.html", "date": "2025年1月26日"}]}, {"id": "chap_getting_started", "title": "二、起步指南", "icon": "🚀", "items": [{"id": "getting_started", "title": "起步指南概述", "icon": "🚀", "file": "02_起步指南_Wh0OwQF0oiUKrIkyLHrcgwMfn6d.html", "date": "2024年3月12日"}, {"id": "env_install", "title": "环境安装与依赖配置", "icon": "💻", "file": "03_环境安装_HsMzwcGKNioPlAkh9pPc8NfznIf.html", "date": "2024年3月10日"}, {"id": "first_app", "title": "编写第一个 MPFlutter 微信小程序", "icon": "📱", "file": "04_编写第一个 MPFlutter 微信小程序_I45wwTI9XiH0AXkvQUEc2jZ8nFP.html", "date": "2024年3月10日"}, {"id": "first_game", "title": "编写第一个 MPFlutter 微信小游戏", "icon": "🎮", "file": "05_编写第一个 MPFlutter 微信小游戏_EbsBwMhzmiVNSXk0dlJcjtxSnwh.html", "date": "2024年4月21日"}, {"id": "learn_more", "title": "了解更多：核心底层架构原理", "icon": "💡", "file": "06_了解更多_HlZYwSKQMiQyGlknBlicxI99nkd.html", "date": "2024年3月10日"}]}, {"id": "chap_build_guide", "title": "三、构建指南", "icon": "🛠️", "items": [{"id": "build_guide", "title": "构建指南概述", "icon": "🛠️", "file": "07_构建指南_Ux6QwUyceioRcNkZxI0cgaQhnKf.html", "date": "2024年3月10日"}, {"id": "dart2js", "title": "Dart2JS 的构建", "icon": "⚡", "file": "构建指南_Dart2JS 的构建_Uv0pwdknKixEJIk6ykccbeFEn2c.html", "date": "2024年3月10日"}, {"id": "resources", "title": "资源文件的构建和使用", "icon": "📦", "file": "构建指南_资源文件的构建和使用_X88PwdjiBiAnTPkhdbZcCSS1n4e.html", "date": "2024年3月10日"}, {"id": "fonts", "title": "字体使用与优化配置", "icon": "🔤", "file": "构建指南_字体使用_U1QPw2Am7ii0bwkNbp1cuufgnah.html", "date": "2024年3月10日"}, {"id": "subpackaging", "title": "小程序智能分包", "icon": "📂", "file": "构建指南_分包_SOyMwWah7iWNiWkRmtncOZepnzh.html", "date": "2024年3月10日"}]}, {"id": "chap_extensions", "title": "四、扩展指南与 Package 生态", "icon": "🧩", "items": [{"id": "extensions", "title": "扩展指南概述", "icon": "🧩", "file": "08_扩展指南_ZoBmwKjNLijOIVkmG4HcRqqjn4b.html", "date": "2024年3月10日"}, {"id": "use_packages", "title": "在 MPFlutter 里使用 Packages", "icon": "🔌", "file": "扩展指南_在 MPFlutter 里使用 Packages_HWPvwnLici0TsYkJoeqc4afTnac.html", "date": "2024年3月10日"}, {"id": "develop_package", "title": "自主开发 Package", "icon": "🛠️", "file": "扩展指南_自主开发 Package_K4SYw4XNfim6Kgk446tcH1KGnUe.html", "date": "2024年3月10日"}]}, {"id": "chap_advanced", "title": "五、进阶指南", "icon": "🚀", "items": [{"id": "advanced", "title": "进阶指南规划与深度架构", "icon": "🚀", "file": "09_进阶指南_XOQiwrvBKiCXshkvJxkc4ByhnQd.html", "date": "2024年1月12日"}]}, {"id": "chap_minitex", "title": "六、MiniTex 免加载字体文本渲染器", "icon": "🔤", "items": [{"id": "minitex", "title": "MiniTex 概述与使用", "icon": "🔤", "file": "10_MiniTex 文本渲染器_JT9kwRkWIiekEMkWxg9cIAITnbd.html", "date": "2024年6月14日"}, {"id": "minitex_deep", "title": "免加载字体的 Flutter 文本渲染器 —— MiniTex", "icon": "📖", "file": "Blog Articles_免加载字体的 Flutter 文本渲染器 —— MiniTex_B62mwAlrzilcoukX16qcupsNndf.html", "date": "2024年6月14日"}]}, {"id": "chap_wechat_features", "title": "七、微信小程序平台特性", "icon": "📱", "items": [{"id": "wechat_features", "title": "微信小程序平台特性概述", "icon": "📱", "file": "11_微信小程序平台特性_FASdwpqeKi2ej8kpALOcsECbnuM.html", "date": "2024年7月9日"}, {"id": "domain", "title": "业务域名配置与限制", "icon": "🌐", "file": "微信小程序平台特性_业务域名_ORrawSYFBiGaZfk3OAXcriNrnOb.html", "date": "2024年3月10日"}, {"id": "wechat_api", "title": "微信小程序 API 封装库 (mpflutter_wechat_api)", "icon": "⚙️", "file": "微信小程序平台特性_微信小程序 API 封装库_KAs6wdMfRiQ1Y0kGB5CcxzMgntc.html", "date": "2024年3月10日"}, {"id": "platform_view", "title": "Platform View 原生视图组件", "icon": "🖼️", "file": "微信小程序平台特性_Platform View_SBAGwVMiVig6aok7EYYcsYKZnoM.html", "date": "2024年7月9日"}, {"id": "platform_view_overlay", "title": "Platform View Overlay 全屏覆盖方案", "icon": "📑", "file": "微信小程序平台特性_Platform View Overlay_DUPFwi89nixeQ7k4D28cmboWnog.html", "date": "2024年7月9日"}, {"id": "share", "title": "分享到会话、朋友圈与单页模式", "icon": "🔗", "file": "微信小程序平台特性_分享到会话、朋友圈_KDWRwdmnQiuqkokcWKmc3ig2nKg.html", "date": "2024年3月10日"}, {"id": "custom_wechat_pkg", "title": "自制微信小程序 Package 指南", "icon": "📦", "file": "微信小程序平台特性_自制微信小程序 Package_Oc9Kw42X5i8naHkNeo8c6JKGnPc.html", "date": "2024年3月10日"}, {"id": "audioplayers", "title": "audioplayers 音频播放适配", "icon": "🎵", "file": "微信小程序平台特性_audioplayers_GMMYwi7LLiiO27kG1Z1cw0SPnXg.html", "date": "2024年3月10日"}, {"id": "splash", "title": "Splash 闪屏机制与配置", "icon": "✨", "file": "微信小程序平台特性_Splash 闪屏_Rjlwwd3Puib14tkeToIcbUsRnwg.html", "date": "2024年3月10日"}, {"id": "tap_request", "title": "Tap Request 用户手势限制问题", "icon": "👆", "file": "微信小程序平台特性_Tap Request 问题_R0HbwZnz1ivmSkkmLdOcEWdan3i.html", "date": "2024年3月10日"}, {"id": "dark_mode", "title": "Dark Mode 暗色模式适配", "icon": "🌙", "file": "微信小程序平台特性_Dark Mode 适配_HR2RwgXLgi4Vwek9lyWc1q4Un2g.html", "date": "2024年3月10日"}, {"id": "order_center", "title": "微信小程序订单中心页接入", "icon": "🛒", "file": "微信小程序平台特性_订单中心页_W0qnwZPPkiO5PTk7RbscZX9bn4e.html", "date": "2024年3月10日"}, {"id": "socket", "title": "Socket 与 WebSocket 通信", "icon": "🔄", "file": "微信小程序平台特性_Socket、WebSocket_R56vwolrriKQCOkjJ6pcCX1Bnaf.html", "date": "2024年6月26日"}, {"id": "imsdk", "title": "在微信小程序中使用 Tencent IMSDK", "icon": "💬", "file": "微信小程序平台特性_在微信小程序中使用 Tencent IMSDK_DUehwuNAOiwYnzkESl4cApJ3nWc.html", "date": "2024年3月10日"}]}, {"id": "chap_wegame_features", "title": "八、微信小游戏平台特性", "icon": "🎮", "items": [{"id": "wegame_features", "title": "微信小游戏平台特性概述", "icon": "🎮", "file": "12_微信小游戏平台特性_M2kpwyJx6i6NNckjO2pcxPepn0g.html", "date": "2024年4月21日"}, {"id": "wegame_api", "title": "微信小游戏 API 封装库 (mpflutter_wegame_api)", "icon": "🕹️", "file": "微信小游戏平台特性_微信小游戏 API 封装库_TCIHwggmsiJ7JZkcJRNcHELEnfe.html", "date": "2024年4月21日"}]}, {"id": "chap_license_support", "title": "九、商用授权、创业计划与技术支持", "icon": "💼", "items": [{"id": "license_support", "title": "商用授权与去除 UNLICENSE 角标", "icon": "💼", "file": "13_商用授权购买_KEL9wIQ7ji4ChmkFnTfcIvJPnzb.html", "date": "2024年10月1日"}, {"id": "startup_program", "title": "个人开发者创业支持计划", "icon": "🤝", "file": "14_个人开发者创业支持计划_SH4dwtMpPi0m14kMMCkcaIyWnuh.html", "date": "2024年3月10日"}, {"id": "tech_support", "title": "技术支持与交流渠道", "icon": "💬", "file": "15_技术支持_EXg0w88B7iCZkbkzGkscZtWlnZf.html", "date": "2024年3月10日"}, {"id": "bug_template", "title": "标准 BUG 反馈模板", "icon": "🐛", "file": "技术支持_BUG 模板_SaOSwFEtEiG7XkkmBftc67Jxnee.html", "date": "2024年3月10日"}]}, {"id": "chap_version_info", "title": "十、版本信息与更新日志 (ChangeLog)", "icon": "📋", "items": [{"id": "version_info", "title": "版本信息与更新日志 (2.0.0 ~ 2.8.0)", "icon": "📋", "file": "16_版本信息_LBtYwgw3Yi0BQzk6XTIcLOVrnZc.html", "date": "2025年3月25日"}]}, {"id": "chap_articles_and_cases", "title": "十一、深度技术博文与精选案例", "icon": "📝", "items": [{"id": "articles_and_cases", "title": "Blog Articles 深度技术博文与精选案例概述", "icon": "📝", "file": "17_Blog Articles_Bev8wGeWFiy8yWkBNYocdbaJnqh.html", "date": "2024年3月10日"}, {"id": "article_how", "title": "在微信小程序里运行完整的 Flutter，怎么做到的？", "icon": "🔬", "file": "Blog Articles_在微信小程序里运行完整的 Flutter，怎么做到的？_LWhrw3gVtiLkK0kSD99cweyjnXn.html", "date": "2024年3月10日"}, {"id": "article_video", "title": "【Flutter观察】MPFlutter 2.0 视频实战教程", "icon": "🎥", "file": "Blog Articles_【Flutter观察】MPFlutter 2.0：使用Flutter快速开发高性能微信小程序_GZ0XwofijisGgbk4zOIcxTPlnLc.html", "date": "2024年3月10日"}, {"id": "showcase", "title": "MPFlutter 精彩生产案例 (音途 / 像素小画家)", "icon": "🎨", "file": "18_精彩案例_BGMNwe6dAiOr6Rkn2oycF9y5nab.html", "date": "2024年3月10日"}]}];
+        const ARTICLES_DATA = [{"id": "overview", "chapterId": "chap_overview", "chapterTitle": "一、MPFlutter 2.0 简介", "title": "MPFlutter 2.0 简介", "icon": "🚅", "date": "2025年1月26日", "html": "\n<h2 id=\"heading-overview-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-overview-1\" class=\"heading-anchor\">#</a>一、MPFlutter 2.0 简介</h2>\n\n\n<p class=\"feishu-p\">你正在阅读的是 MPFlutter 2.0 版本文档，1.0 已正式废弃，请勿阅读相关文档。</p>\n\n\n<p class=\"feishu-p\">MPFlutter 已适配原生鸿蒙微信小程序，请移步『版本信息』更新至最新版本，重新编译小程序上传。</p>\n\n\n\n<h3 id=\"heading-overview-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-overview-2\" class=\"heading-anchor\">#</a>什么是 MPFlutter</h3>\n\n\n<p class=\"feishu-p\">MPFlutter 是一款用于构建小程序的开发框架，基于 Flutter 构建，开发体验无限接近于 Flutter 原生应用。</p>\n\n\n<p class=\"feishu-p\">你可以基于 MPFlutter 开发以下平台的小程序、小游戏：</p>\n\n<ul class=\"feishu-ul\">\n<li>微信小程序</li>\n<li>微信小游戏</li>\n<li>抖音小程序（WIP）</li>\n</ul>\n\n\n<h3 id=\"heading-overview-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-overview-3\" class=\"heading-anchor\">#</a>原生 Flutter 开发体验</h3>\n\n\n<p class=\"feishu-p\">MPFlutter 的目标是，在尽可能保留 Flutter 开发体验的同时，降低应用迁移到微信小程序的成本。</p>\n\n\n<p class=\"feishu-p\">我们已经实现以下能力：</p>\n\n<ul class=\"feishu-ul\">\n<li>无缝迁移</li>\n<li>无须裁剪 Flutter Framework，你可以使用 Material / Cupertino 这些官方组件搭建 UI。</li>\n<li>自适应的构建脚本，构建小程序就像构建原生应用一般简单。</li>\n<li>完整的分包支持，适应小程序分包大小限制，静态资源、代码都可以轻松分包。</li>\n<li>实时预览能力</li>\n<li>快速预览，在 Desktop 上使用 Hot Reload / Hot Restart 快速预览界面及应用逻辑</li>\n<li>跨端联调，在 Desktop 预览的基础上，可连接到微信宿主，远程调用端上接口。</li>\n<li>纯正的 Flutter</li>\n<li>支持 Flutter 3.13 以上版本，并且保证跟随官方升级而升级。</li>\n<li>完全一致的 Flutter 插件体系，开发 MPFlutter 插件就像开发 Flutter 插件一样简单。</li>\n<li>完全一致的 Pub 包管理系统，开发好的插件直接上传官方包管理平台即可使用。</li>\n</ul>\n\n<p class=\"feishu-p\">总的来说，MPFlutter 就是尽可能地帮助你以低成本的方式构建微信小程序。</p>\n\n\n\n<h3 id=\"heading-overview-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-overview-4\" class=\"heading-anchor\">#</a>高性能的渲染体验</h3>\n\n\n<p class=\"feishu-p\">MPFlutter 2.0 使用 Skia + WebGL 渲染，对于 MPFlutter 1.0，性能提升是非常明显的。</p>\n\n\n<p class=\"feishu-p\">具体体验在以下场景：</p>\n\n<ul class=\"feishu-ul\">\n<li>频繁更新的界面</li>\n<li>不再通过 WXML <-> JS 双向传递数据，直接通过 JS 控制 WebGL 渲染，只要 Widget 层级合理，可以做到毫秒级驱动界面更新。</li>\n<li>使用 WebGL 驱动渲染，可提升渲染缓存灵活性，你可以使用 RepaintBoundary 进一步提升界面帧率。</li>\n<li>频繁的事件交互</li>\n<li>事件的接收不再单纯依赖宿主小程序的回传，MPFlutter 仅接收最基本的触摸、键盘事件，后续的事件分发全部交回 Flutter Framework 处理。</li>\n<li>这意味着你可以在小程序中获取更多、更实时的事件。</li>\n</ul>\n\n\n", "headings": [{"id": "heading-overview-1", "title": "一、MPFlutter 2.0 简介", "level": 2}, {"id": "heading-overview-2", "title": "什么是 MPFlutter", "level": 3}, {"id": "heading-overview-3", "title": "原生 Flutter 开发体验", "level": 3}, {"id": "heading-overview-4", "title": "高性能的渲染体验", "level": 3}], "wordCount": 1123, "readTime": 3, "file": "01_MPFlutter 2.0_TayPw6pxKiZGdxkNe4bcmSnNnSg.html"}, {"id": "getting_started", "chapterId": "chap_getting_started", "chapterTitle": "二、起步指南", "title": "起步指南概述", "icon": "🚀", "date": "2024年3月12日", "html": "\n<h2 id=\"heading-getting_started-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-getting_started-1\" class=\"heading-anchor\">#</a>二、起步指南</h2>\n\n\n", "headings": [{"id": "heading-getting_started-1", "title": "二、起步指南", "level": 2}], "wordCount": 11, "readTime": 1, "file": "02_起步指南_Wh0OwQF0oiUKrIkyLHrcgwMfn6d.html"}, {"id": "env_install", "chapterId": "chap_getting_started", "chapterTitle": "二、起步指南", "title": "环境安装与依赖配置", "icon": "💻", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-env_install-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-env_install-1\" class=\"heading-anchor\">#</a>2.1 环境安装与依赖配置</h2>\n\n\n<p class=\"feishu-p\">本指南不太适合完全零基础的 Flutter 开发者阅读。</p>\n\n\n<p class=\"feishu-p\">在正式体验 MPFlutter 前，强烈建议你先从基本的 Flutter 开始学习，先使用 Flutter 完成一个桌面应用或移动应用编写。</p>\n\n\n\n<h3 id=\"heading-env_install-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-env_install-2\" class=\"heading-anchor\">#</a>Flutter SDK</h3>\n\n\n<p class=\"feishu-p\">版本要求：>= 3.13 & <= 3.16.7 或 >= 3.22</p>\n\n\n<p class=\"feishu-p\">安装方法：<a href=\"https://flutter.cn/docs/get-started/install\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://flutter.cn/docs/get-started/install</a></p>\n\n\n\n<h3 id=\"heading-env_install-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-env_install-3\" class=\"heading-anchor\">#</a>操作系统</h3>\n\n\n<p class=\"feishu-p\">你可以使用 Windows / macOS / Linux 完成 MPFlutter 应用开发、调试。</p>\n\n\n<p class=\"feishu-p\">由于微信开发者工具未提供 Linux 版本，因此不建议你使用 Linux 作为主要开发机。</p>\n\n\n\n<h3 id=\"heading-env_install-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-env_install-4\" class=\"heading-anchor\">#</a>编辑工具</h3>\n\n\n<p class=\"feishu-p\">你可以使用 VSCode / Android Studio / IntelliJ IDEA 完成 MPFlutter 应用开发，需要在对应编辑器中安装 Flutter 插件。</p>\n\n\n<p class=\"feishu-p\">配置方法：<a href=\"https://flutter.cn/docs/get-started/editor\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://flutter.cn/docs/get-started/editor</a></p>\n\n\n\n<h3 id=\"heading-env_install-5\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-env_install-5\" class=\"heading-anchor\">#</a>微信开发者工具</h3>\n\n\n<p class=\"feishu-p\">我们需要使用「微信开发者工具」进行小程序预览、上传、发布操作。</p>\n\n\n<p class=\"feishu-p\">下载地址：<a href=\"https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html</a></p>\n\n\n<p class=\"feishu-p\">强烈建议你在下载完成工具以后，体验一下基本的小程序开发知识，特别是预览、上传的操作，具体方法请阅读微信官方文档。</p>\n\n\n\n<h3 id=\"heading-env_install-6\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-env_install-6\" class=\"heading-anchor\">#</a>Brotli</h3>\n\n\n<p class=\"feishu-p\">Brotli 是一种用于数据压缩的开源算法，它能够提供高效的压缩比和快速的解压缩速度。Brotli 算法由 Google 开发，最初用于其 Chrome 浏览器中的数据压缩，后来成为了开放的标准。</p>\n\n\n<p class=\"feishu-p\">MPFlutter 使用 Brotli 压缩资源文件，你必须在电脑上安装 brotli 命令行程序，并添加它到 PATH 中。</p>\n\n\n<p class=\"feishu-p\">下面是在各个平台上安装 Brotli 的方法：</p>\n\n\n<p class=\"feishu-p\">1.Linux:</p>\n<ul class=\"feishu-ul\">\n<li>使用包管理器安装：大多数 Linux 发行版都提供了 Brotli 的软件包。你可以使用包管理器（如apt、yum、dnf等）来安装，具体命令可能因发行版而异。例如，在 Ubuntu 上，你可以运行以下命令安装 Brotli：</li>\n</ul>\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">code</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-\">sudo apt-get install brotli</code></pre>\n                </div>\n\n<ul class=\"feishu-ul\">\n<li>从源代码构建：你也可以从 Brotli 的 GitHub 仓库中获取源代码并进行构建。以下是获取和构建 Brotli 的命令：</li>\n</ul>\n\n\n<h3 id=\"heading-env_install-7\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-env_install-7\" class=\"heading-anchor\">#</a>Brotli 在各大操作系统的安装命令指南</h3>\n\n<p class=\"feishu-p\">Brotli 是一种用于高效数据压缩的开源算法，MPFlutter 在构建阶段使用 Brotli 压缩核心资源文件，因此开发环境必须安装 <code class=\"inline-code\">brotli</code> 命令行并将其添加至环境变量 <code class=\"inline-code\">PATH</code> 中：</p>\n<ul class=\"feishu-ul\">\n<li><strong>macOS</strong>:</li>\n</ul>\n\n<p class=\"feishu-p\">```bash</p>\n\n<p class=\"feishu-p\">brew install brotli</p>\n\n<p class=\"feishu-p\">```</p>\n<ul class=\"feishu-ul\">\n<li><strong>Ubuntu / Debian</strong>:</li>\n</ul>\n\n<p class=\"feishu-p\">```bash</p>\n\n<p class=\"feishu-p\">sudo apt-get install brotli</p>\n\n<p class=\"feishu-p\">```</p>\n<ul class=\"feishu-ul\">\n<li><strong>Windows</strong>:</li>\n<li>推荐使用包管理器安装：<code class=\"inline-code\">winget install Google.Brotli</code> 或 <code class=\"inline-code\">vcpkg install brotli</code></li>\n<li>或从 <a href=\"https://github.com/google/brotli/releases\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">Google Brotli 官方 GitHub Releases</a> 下载对应 zip，解压并把 <code class=\"inline-code\">brotli.exe</code> 路径加入系统环境变量 <code class=\"inline-code\">PATH</code>。</li>\n<li><strong>验证安装</strong>：</li>\n</ul>\n\n<p class=\"feishu-p\">在终端中运行 <code class=\"inline-code\">brotli --version</code>，若正常输出版本号即安装成功。</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-env_install-1", "title": "2.1 环境安装与依赖配置", "level": 2}, {"id": "heading-env_install-2", "title": "Flutter SDK", "level": 3}, {"id": "heading-env_install-3", "title": "操作系统", "level": 3}, {"id": "heading-env_install-4", "title": "编辑工具", "level": 3}, {"id": "heading-env_install-5", "title": "微信开发者工具", "level": 3}, {"id": "heading-env_install-6", "title": "Brotli", "level": 3}, {"id": "heading-env_install-7", "title": "Brotli 在各大操作系统的安装命令指南", "level": 3}], "wordCount": 1735, "readTime": 5, "file": "03_环境安装_HsMzwcGKNioPlAkh9pPc8NfznIf.html"}, {"id": "first_app", "chapterId": "chap_getting_started", "chapterTitle": "二、起步指南", "title": "编写第一个 MPFlutter 微信小程序", "icon": "📱", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-first_app-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-first_app-1\" class=\"heading-anchor\">#</a>2.2 编写第一个 MPFlutter 微信小程序</h2>\n\n\n\n<h3 id=\"heading-first_app-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-first_app-2\" class=\"heading-anchor\">#</a>从模板工程开始</h3>\n\n\n<p class=\"feishu-p\">直接下载以下任意一个 awesome_project 并解压：</p>\n\n\n\n\n<div class=\"feishu-file-card\">\n            <div class=\"file-card-left\">\n                <div class=\"file-card-icon-wrap\">\n                    <svg class=\"file-zip-svg\" width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\">\n                        <path d=\"M1.5 0h14.086a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V26.5a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 010 26.5v-25A1.5 1.5 0 011.5 0z\" fill=\"#3370FF\"/>\n                        <path d=\"M16.293.293l5.414 5.414A1 1 0 0121.91 6H17.5A1.5 1.5 0 0116 4.5V.09a1 1 0 01.293.203z\" fill=\"#245BDB\"/>\n                        <rect x=\"7\" y=\"11\" width=\"18\" height=\"14\" rx=\"2\" fill=\"#FFFFFF\" fill-opacity=\"0.2\"/>\n                        <text x=\"8\" y=\"21\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"bold\" font-family=\"monospace\">ZIP</text>\n                    </svg>\n                </div>\n                <div class=\"file-card-info\">\n                    <div class=\"file-card-title\">awesome_project_275.zip</div>\n                    <div class=\"file-card-subtitle\">Skia Font 版本，起始包体积 5 M，内置常用中文字体支持 • <span class=\"file-size-badge\">2.2 MB</span> • 100% 离线可用</div>\n                </div>\n            </div>\n            <div class=\"file-card-actions\">\n                <a href=\"./awesome_project_275.zip\" download class=\"btn-card btn-card-download\" title=\"下载本地 ZIP 包\">\n                    <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3\"/></svg>\n                    下载 ZIP\n                </a>\n                <a href=\"./awesome_project/\" class=\"btn-card btn-card-browse\" target=\"_blank\" title=\"浏览本地已解压工程\">\n                    <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z\"/></svg>\n                    已解压目录\n                </a>\n            </div>\n        </div>\n\n\n\n<div class=\"feishu-file-card\">\n            <div class=\"file-card-left\">\n                <div class=\"file-card-icon-wrap\">\n                    <svg class=\"file-zip-svg\" width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\">\n                        <path d=\"M1.5 0h14.086a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V26.5a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 010 26.5v-25A1.5 1.5 0 011.5 0z\" fill=\"#3370FF\"/>\n                        <path d=\"M16.293.293l5.414 5.414A1 1 0 0121.91 6H17.5A1.5 1.5 0 0116 4.5V.09a1 1 0 01.293.203z\" fill=\"#245BDB\"/>\n                        <rect x=\"7\" y=\"11\" width=\"18\" height=\"14\" rx=\"2\" fill=\"#FFFFFF\" fill-opacity=\"0.2\"/>\n                        <text x=\"8\" y=\"21\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"bold\" font-family=\"monospace\">ZIP</text>\n                    </svg>\n                </div>\n                <div class=\"file-card-info\">\n                    <div class=\"file-card-title\">awesome_project_minitex_275.zip</div>\n                    <div class=\"file-card-subtitle\">MiniTex 版本，起始包体积仅 1.5 M，免字体网络加载 • <span class=\"file-size-badge\">2.2 MB</span> • 100% 离线可用</div>\n                </div>\n            </div>\n            <div class=\"file-card-actions\">\n                <a href=\"./awesome_project_minitex_275.zip\" download class=\"btn-card btn-card-download\" title=\"下载本地 ZIP 包\">\n                    <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3\"/></svg>\n                    下载 ZIP\n                </a>\n                <a href=\"./awesome_project_minitex/\" class=\"btn-card btn-card-browse\" target=\"_blank\" title=\"浏览本地已解压工程\">\n                    <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z\"/></svg>\n                    已解压目录\n                </a>\n            </div>\n        </div>\n\n\n<p class=\"feishu-p\">解压后，可见这是一个标准的 Flutter 工程。</p>\n\n\n<p class=\"feishu-p\">这个工程存在以下文件，是 MPFlutter 专有的。</p>\n\n\n<p class=\"feishu-p\">fonts</p>\n\n\n<p class=\"feishu-p\">文件夹</p>\n\n\n<p class=\"feishu-p\">存放内置于小程序包的字体文件</p>\n\n\n<p class=\"feishu-p\">wechat</p>\n\n\n<p class=\"feishu-p\">文件夹</p>\n\n\n<p class=\"feishu-p\">存放微信小程序工程文件</p>\n\n<ul class=\"feishu-ul\">\n<li>可修改 wechat/project.config.json 中的工程配置</li>\n<li>可添加额外的小程序逻辑、资源到该工程</li>\n</ul>\n\n<p class=\"feishu-p\">scripts</p>\n\n\n<p class=\"feishu-p\">文件夹</p>\n\n\n<p class=\"feishu-p\">存放构建脚本</p>\n\n\n<p class=\"feishu-p\">另外，lib/main.dart 也和普通的 Flutter 工程不一样，具体是：</p>\n\n<ul class=\"feishu-ul\">\n<li>runApp 换成 runMPApp</li>\n<li>navigatorObservers 必须包含 MPNavigatorObserver</li>\n</ul>\n\n<p class=\"feishu-p\">除此以外，Flutter 所允许编写的任何代码、依赖库都可以在 MPFlutter 中使用。</p>\n\n\n\n<h3 id=\"heading-first_app-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-first_app-3\" class=\"heading-anchor\">#</a>Flutter SDK 版本支持情况</h3>\n\n\n<p class=\"feishu-p\">Flutter SDK >3.16.7 and <3.22.0以及 > 3.29 是不被支持的。</p>\n\n\n<p class=\"feishu-p\">当你使用 3.22+ SDK 时，请确保 pubspec.yaml 中的 environment.sdk 设置正确：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">environment:\n  sdk: &quot;&gt;=3.4.0 &lt;4.0.0&quot;</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">当你使用 3.16.7- SDK，也需要确保该值如下方所示：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">environment:\n  sdk: &quot;&gt;=3.2.0 &lt;4.0.0&quot;</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">不正确的设置会导致构建失败。</p>\n\n\n\n<h3 id=\"heading-first_app-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-first_app-4\" class=\"heading-anchor\">#</a>FVM</h3>\n\n\n<p class=\"feishu-p\">从 2.6.0 版本开始，MPFlutter 支持使用 fvm 构建，请在解压后的工程目录下使用 fvm use 命令完成初始化。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">fvm use 3.16.7</code></pre>\n                </div>\n\n\n\n<h3 id=\"heading-first_app-5\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-first_app-5\" class=\"heading-anchor\">#</a>构建应用命令与步骤详解</h3>\n<ol class=\"feishu-ol\">\n<li><strong>执行构建命令</strong>：</li>\n</ol>\n\n<p class=\"feishu-p\">在小程序工程根目录下执行：</p>\n\n<p class=\"feishu-p\">```bash</p>\n\n<p class=\"feishu-p\">dart scripts/build_wechat.dart</p>\n\n<p class=\"feishu-p\">```</p>\n\n<p class=\"feishu-p\">如果使用 FVM 管理 Flutter 版本，则运行：</p>\n\n<p class=\"feishu-p\">```bash</p>\n\n<p class=\"feishu-p\">fvm dart scripts/build_wechat.dart</p>\n\n<p class=\"feishu-p\">```</p>\n<ol class=\"feishu-ol\">\n<li><strong>导入微信开发者工具</strong>：</li>\n</ol>\n\n<ul class=\"feishu-ul\">\n<li>打开「微信开发者工具」；</li>\n<li>点击「导入工程」；</li>\n<li>项目目录选择模板工程中的 <code class=\"inline-code\">wechat</code> 目录；</li>\n<li>AppID 填入你注册的微信小程序测试号或正式 AppID；</li>\n<li>导入后即可直接在微信开发者工具中进行实时预览、断点调试及上传发布。</li>\n</ul>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-first_app-1", "title": "2.2 编写第一个 MPFlutter 微信小程序", "level": 2}, {"id": "heading-first_app-2", "title": "从模板工程开始", "level": 3}, {"id": "heading-first_app-3", "title": "Flutter SDK 版本支持情况", "level": 3}, {"id": "heading-first_app-4", "title": "FVM", "level": 3}, {"id": "heading-first_app-5", "title": "构建应用命令与步骤详解", "level": 3}], "wordCount": 2903, "readTime": 9, "file": "04_编写第一个 MPFlutter 微信小程序_I45wwTI9XiH0AXkvQUEc2jZ8nFP.html"}, {"id": "first_game", "chapterId": "chap_getting_started", "chapterTitle": "二、起步指南", "title": "编写第一个 MPFlutter 微信小游戏", "icon": "🎮", "date": "2024年4月21日", "html": "\n<h2 id=\"heading-first_game-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-first_game-1\" class=\"heading-anchor\">#</a>2.3 编写第一个 MPFlutter 微信小游戏</h2>\n\n\n<p class=\"feishu-p\">收到反馈：Flutter 3.16.8 存在白屏及包体积增大问题，请使用 3.16.7 以下版本。</p>\n\n\n\n<h3 id=\"heading-first_game-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-first_game-2\" class=\"heading-anchor\">#</a>从模板工程开始</h3>\n\n\n<p class=\"feishu-p\">直接下载以下 awesome_game_template 并解压</p>\n\n\n<p class=\"feishu-p\">解压后，可见这是一个标准的 Flutter 游戏工程，使用 Flame 框架开发。</p>\n\n\n<p class=\"feishu-p\">这个工程存在以下文件，是 MPFlutter 专有的。</p>\n\n\n<p class=\"feishu-p\">fonts</p>\n\n\n<p class=\"feishu-p\">文件夹</p>\n\n\n<p class=\"feishu-p\">存放内置于小游戏包的字体文件</p>\n\n\n<p class=\"feishu-p\">wegame</p>\n\n\n<p class=\"feishu-p\">文件夹</p>\n\n\n<p class=\"feishu-p\">存放微信小游戏工程文件</p>\n\n<ul class=\"feishu-ul\">\n<li><a href=\"https://developers.weixin.qq.com/minigame/dev/reference/configuration/app.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">可修改 wegame/game.json 中的游戏配置</a></li>\n<li>可修改 wegame/project.config.json 中的工程配置</li>\n<li>可添加额外的小游戏逻辑、资源到该工程</li>\n</ul>\n\n<p class=\"feishu-p\">scripts</p>\n\n\n<p class=\"feishu-p\">文件夹</p>\n\n\n<p class=\"feishu-p\">存放构建脚本</p>\n\n\n<p class=\"feishu-p\">另外，lib/main.dart 也和普通的 Flutter 工程不一样，具体是：</p>\n\n<ul class=\"feishu-ul\">\n<li>runApp 换成 runMPApp</li>\n</ul>\n\n<p class=\"feishu-p\">除此以外，Flutter 所允许编写的任何代码、依赖库都可以在 MPFlutter 中使用。</p>\n\n\n\n<h3 id=\"heading-first_game-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-first_game-3\" class=\"heading-anchor\">#</a>Flutter SDK 版本支持情况</h3>\n\n\n<p class=\"feishu-p\">Flutter SDK >3.16.7 and <3.22.0以及 > 3.27 是不被支持的。</p>\n\n\n<p class=\"feishu-p\">当你使用 3.22+ SDK 时，请确保 pubspec.yaml 中的 environment.sdk 设置正确：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">\n  sdk: &quot;&gt;=3.4.0 &lt;4.0.0&quot;</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">当你使用 3.16.7- SDK，也需要确保该值如下方所示：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">\n  sdk: &quot;&gt;=3.2.0 &lt;4.0.0&quot;</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">不正确的设置会导致构建失败。</p>\n\n\n\n<h3 id=\"heading-first_game-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-first_game-4\" class=\"heading-anchor\">#</a>构建应用</h3>\n\n\n<p class=\"feishu-p\">在命令行下，执行以下命令构建微信小程序：</p>\n\n\n\n<h3 id=\"heading-first_game-5\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-first_game-5\" class=\"heading-anchor\">#</a>构建小游戏命令与步骤</h3>\n<ol class=\"feishu-ol\">\n<li><strong>执行构建命令</strong>：</li>\n</ol>\n\n<p class=\"feishu-p\">在小游戏工程根目录下执行：</p>\n\n<p class=\"feishu-p\">```bash</p>\n\n<p class=\"feishu-p\">dart scripts/build_wegame.dart</p>\n\n<p class=\"feishu-p\">```</p>\n<ol class=\"feishu-ol\">\n<li><strong>导入微信开发者工具</strong>：</li>\n</ol>\n\n<ul class=\"feishu-ul\">\n<li>项目目录选择模板工程中的 <code class=\"inline-code\">wegame</code> 目录；</li>\n<li>选择「微信小游戏」模式导入即可开始调试。</li>\n</ul>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-first_game-1", "title": "2.3 编写第一个 MPFlutter 微信小游戏", "level": 2}, {"id": "heading-first_game-2", "title": "从模板工程开始", "level": 3}, {"id": "heading-first_game-3", "title": "Flutter SDK 版本支持情况", "level": 3}, {"id": "heading-first_game-4", "title": "构建应用", "level": 3}, {"id": "heading-first_game-5", "title": "构建小游戏命令与步骤", "level": 3}], "wordCount": 1375, "readTime": 4, "file": "05_编写第一个 MPFlutter 微信小游戏_EbsBwMhzmiVNSXk0dlJcjtxSnwh.html"}, {"id": "learn_more", "chapterId": "chap_getting_started", "chapterTitle": "二、起步指南", "title": "了解更多：核心底层架构原理", "icon": "💡", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-learn_more-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-learn_more-1\" class=\"heading-anchor\">#</a>2.4 深入了解：核心底层架构原理</h2>\n\n\n\n<h4 id=\"heading-learn_more-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-learn_more-2\" class=\"heading-anchor\">#</a>原理</h4>\n\n\n<p class=\"feishu-p\">为什么 MPFlutter 可以运行在微信小程序上？MPFlutter 在背后做了什么工作？</p>\n\n\n<p class=\"feishu-p\">在回答这个问题前，我们先看看 Flutter 官方是如何在 Web 上运行 Flutter 应用的：</p>\n\n\n\n\n<div class=\"article-image-box\">\n                <img src=\"./images/architecture_flutter_wechat.jpg\" alt=\"MPFlutter 运行原理与架构图\" class=\"zoomable-img\" onclick=\"openLightbox('./images/architecture_flutter_wechat.jpg', 'MPFlutter 运行原理与架构图')\" />\n                <div class=\"image-caption\">MPFlutter 运行原理与架构图</div>\n            </div>\n\n\n\n<p class=\"feishu-p\">这里有几个要点：</p>\n\n<ul class=\"feishu-ul\">\n<li>Dart 代码是无法直接运行在浏览器的，必须编译成 JavaScript，Dart 提供了 dart2js 编译器。</li>\n<li>浏览器是没有 Skia API 提供的，因此需要找到合适的 Renderer 用于最终渲染，存在两种 Renderer。</li>\n<li>HTML Renderer，它直接将 RenderTree 翻译成普通的 DOM 对象，添加到 body 上，由浏览器自行合成界面。</li>\n<li>CanvasKit Renderer，它借助 WebAssembly 技术，使得 Skia 可以运行在浏览器上，并结合 WebGL 渲染界面。</li>\n</ul>\n\n<p class=\"feishu-p\">不同的渲染方案各有优点：</p>\n\n<ul class=\"feishu-ul\">\n<li>HTML Renderer 兼容性更好，也不需要关注字体加载问题，但是在移动端性能表现堪忧。</li>\n<li>CanvasKit Renderer 性能最优，兼容性在现阶段已不是问题，但需要关注字体加载、包体积等问题。</li>\n</ul>\n\n<p class=\"feishu-p\">从 Flutter 的渲染一致性角度来看，CanvasKit Renderer 是更贴近 Flutter 的理念的。</p>\n\n\n<p class=\"feishu-p\">MPFlutter 2.0 选择了 CanvasKit Renderer 方案：</p>\n\n\n<p class=\"feishu-p\">MPFlutter 2.0 完全复用 Flutter For Web 的基建，我们提供了以下适配策略：</p>\n\n<ul class=\"feishu-ul\">\n<li>裁剪并编译一个符合微信小程序包大小要求的 Skia WebAssembly 库；</li>\n<li>适当地调整 Skia CanvasKit 加载脚本，使它能运行在微信小程序上；</li>\n<li>添加智能分包策略，使 main.dart.js 以及资源文件可以在构建阶段智能地分配到不同分包中；</li>\n<li>在微信小程序中，补全 Flutter For Web 所需要的 Web API；</li>\n<li>在微信小程序中，补充必要的触摸、键盘事件回传。</li>\n</ul>\n\n\n<h4 id=\"heading-learn_more-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-learn_more-3\" class=\"heading-anchor\">#</a>方案优点</h4>\n\n\n<p class=\"feishu-p\">MPFlutter 在帧率表现上优于传统的小程序开发模式。</p>\n\n\n<p class=\"feishu-p\">传统的小程序开发模式其数据交换可见下图：</p>\n\n\n", "headings": [{"id": "heading-learn_more-1", "title": "2.4 深入了解：核心底层架构原理", "level": 2}, {"id": "heading-learn_more-2", "title": "原理", "level": 4}, {"id": "heading-learn_more-3", "title": "方案优点", "level": 4}], "wordCount": 1013, "readTime": 3, "file": "06_了解更多_HlZYwSKQMiQyGlknBlicxI99nkd.html"}, {"id": "build_guide", "chapterId": "chap_build_guide", "chapterTitle": "三、构建指南", "title": "构建指南概述", "icon": "🛠️", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-build_guide-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-build_guide-1\" class=\"heading-anchor\">#</a>三、构建指南</h2>\n\n\n", "headings": [{"id": "heading-build_guide-1", "title": "三、构建指南", "level": 2}], "wordCount": 11, "readTime": 1, "file": "07_构建指南_Ux6QwUyceioRcNkZxI0cgaQhnKf.html"}, {"id": "dart2js", "chapterId": "chap_build_guide", "chapterTitle": "三、构建指南", "title": "Dart2JS 的构建", "icon": "⚡", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-dart2js-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-dart2js-1\" class=\"heading-anchor\">#</a>3.1 Dart2JS 构建深入</h2>\n\n\n\n<h3 id=\"heading-dart2js-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-dart2js-2\" class=\"heading-anchor\">#</a>运行原理</h3>\n\n\n<p class=\"feishu-p\">Flutter 程序之所以可以运行在微信小程序上，是因为 Dart 官方提供了 dart2js 编译器，它可以在 JavaScript 中完整地模拟出 DartVM。</p>\n\n\n<p class=\"feishu-p\">MPFlutter 同样也是借助 flutter build web 命令构建最终 JS 产物。</p>\n\n\n\n<h3 id=\"heading-dart2js-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-dart2js-3\" class=\"heading-anchor\">#</a>构建方法</h3>\n\n\n\n<h4 id=\"heading-dart2js-4\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-dart2js-4\" class=\"heading-anchor\">#</a>常规构建</h4>\n\n\n<p class=\"feishu-p\">常规构建适用于预览、上传、发布，使用以下命令执行常规构建：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">code</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-\">dart scripts/build_wechat.dart</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">常规构建会按照以下步骤执行：</p>\n\n\n<p class=\"feishu-p\">1.使用 flutter build web 构建 web 产物</p>\n\n<p class=\"feishu-p\">2.复制工程根目录下的 wechat 到 build/wechat 目录下</p>\n\n<p class=\"feishu-p\">3.使用 mpflutter_build_tools 工具复制 web 产物到 build/wechat 目录下</p>\n\n<p class=\"feishu-p\">4.微调 wechat 下的 JavaScript 以保证可以在小程序环境下执行</p>\n\n<p class=\"feishu-p\">5.添加分包信息</p>\n\n\n<h4 id=\"heading-dart2js-5\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-dart2js-5\" class=\"heading-anchor\">#</a>调试构建</h4>\n\n\n<p class=\"feishu-p\">调试构建适用于在微信开发者工具中查找运行时问题，使用以下命令构建：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">bash</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-bash\">dart scripts/build_wechat.dart --debug</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">通过该模式构建的产物，可以在微信开发者工具 > 调试 > Source 选项卡中看到 dart 源码，并基于 dart 源码进行断点调试。</p>\n\n\n<p class=\"feishu-p\">该模式打包的产物，会超出小程序包大小限制，不能在真机调试和预览。</p>\n\n\n\n<h4 id=\"heading-dart2js-6\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-dart2js-6\" class=\"heading-anchor\">#</a>性能数据构建</h4>\n\n\n<p class=\"feishu-p\">目前这种方式还未完善，暂时不要使用。</p>\n\n\n<p class=\"feishu-p\">调试构建适用于在预览场景下获取性能数据，它将附带性能信息窗口在应用界面，使用以下命令构建：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">bash</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-bash\">dart scripts/build_wechat.dart --debug</code></pre>\n                </div>\n\n\n\n<h3 id=\"heading-dart2js-7\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-dart2js-7\" class=\"heading-anchor\">#</a>环境判断评论</h3>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-dart2js-1", "title": "3.1 Dart2JS 构建深入", "level": 2}, {"id": "heading-dart2js-2", "title": "运行原理", "level": 3}, {"id": "heading-dart2js-3", "title": "构建方法", "level": 3}, {"id": "heading-dart2js-4", "title": "常规构建", "level": 4}, {"id": "heading-dart2js-5", "title": "调试构建", "level": 4}, {"id": "heading-dart2js-6", "title": "性能数据构建", "level": 4}, {"id": "heading-dart2js-7", "title": "环境判断评论", "level": 3}], "wordCount": 1444, "readTime": 4, "file": "构建指南_Dart2JS 的构建_Uv0pwdknKixEJIk6ykccbeFEn2c.html"}, {"id": "resources", "chapterId": "chap_build_guide", "chapterTitle": "三、构建指南", "title": "资源文件的构建和使用", "icon": "📦", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-resources-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-resources-1\" class=\"heading-anchor\">#</a>3.2 资源文件的构建和使用</h2>\n\n\n<p class=\"feishu-p\">Flutter 应用程序包含代码和 assets（也为资源），资源是被打包到小程序安装包中的。</p>\n\n\n<p class=\"feishu-p\">由于微信小程序包整体大小限制在 20M 内，建议你尽可能通过 HTTP 加载资源使用。</p>\n\n\n\n<h3 id=\"heading-resources-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-resources-2\" class=\"heading-anchor\">#</a>支持文件类型</h3>\n\n\n<p class=\"feishu-p\">在 MPFlutter 中，你可以使用以下类型的资源文件：</p>\n\n\n\n<h5 id=\"heading-resources-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-resources-3\" class=\"heading-anchor\">#</a>静态数据：</h5>\n\n\n<p class=\"feishu-p\">JSON / Text / 二进制数据文件</p>\n\n\n\n<h5 id=\"heading-resources-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-resources-3\" class=\"heading-anchor\">#</a>图片：</h5>\n\n<ul class=\"feishu-ul\">\n<li>JPEG / PNG</li>\n<li>SVG （需要添加 flutter_svg 依赖库）</li>\n<li>不支持 WebP / GIF / BMP</li>\n</ul>\n\n\n<h5 id=\"heading-resources-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-resources-3\" class=\"heading-anchor\">#</a>字体：</h5>\n\n<ul class=\"feishu-ul\">\n<li>TTF</li>\n</ul>\n\n\n<h3 id=\"heading-resources-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-resources-3\" class=\"heading-anchor\">#</a>资源引入和使用</h3>\n\n\n<p class=\"feishu-p\">直接参数 Flutter 官方文档在 pubspec.yaml 指定，使用 rootBundle 或者 AssetImage 加载就可以。</p>\n\n\n<p class=\"feishu-p\"><a href=\"https://flutter.cn/docs/ui/assets/assets-and-images\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://flutter.cn/docs/ui/assets/assets-and-images</a></p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-resources-1", "title": "3.2 资源文件的构建和使用", "level": 2}, {"id": "heading-resources-2", "title": "支持文件类型", "level": 3}, {"id": "heading-resources-3", "title": "资源引入和使用", "level": 3}], "wordCount": 416, "readTime": 1, "file": "构建指南_资源文件的构建和使用_X88PwdjiBiAnTPkhdbZcCSS1n4e.html"}, {"id": "fonts", "chapterId": "chap_build_guide", "chapterTitle": "三、构建指南", "title": "字体使用与优化配置", "icon": "🔤", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-fonts-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-fonts-1\" class=\"heading-anchor\">#</a>3.3 字体使用与优化配置</h2>\n\n\n\n<h3 id=\"heading-fonts-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-fonts-2\" class=\"heading-anchor\">#</a>应用包内置字体</h3>\n\n\n<p class=\"feishu-p\">MPFlutter 默认使用 <a href=\"https://fonts.google.com/noto/specimen/Noto+Sans/about\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">Google NotoSans</a> 和 <a href=\"https://fonts.google.com/specimen/Roboto/about\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">Roboto</a> 字体渲染文本，这两种字体均为<a href=\"https://fonts.google.com/noto/specimen/Noto+Sans/about\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">可商用字体</a>。</p>\n\n\n<p class=\"feishu-p\">在 《<a href=\"https://weypl4zsnv.feishu.cn/wiki/I45wwTI9XiH0AXkvQUEc2jZ8nFP\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">编写第一个 MPFlutter 微信小程序</a>》 文档中下载的 awesome_project，在 fonts 目录下就存在对应的 ttf 文件。</p>\n\n\n<p class=\"feishu-p\">特别提醒你，fonts/NotoSansSC-Regular.ttf 简体中文字体文件是经过裁剪的，它收录了常用的 9000+ 简体汉字。如果你需要使用完整版本的 NotoSansSc，请直接删除这个文件，参考本文档「自定义字体」处理。</p>\n\n\n\n<h3 id=\"heading-fonts-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-fonts-3\" class=\"heading-anchor\">#</a>为什么要指定字体文件？</h3>\n\n\n<p class=\"feishu-p\">MPFlutter 是基于 Flutter For Web + CanvasKit Renderer 渲染的，实质上是通过 Skia + WebGL 渲染界面。</p>\n\n\n<p class=\"feishu-p\">在浏览器上、在微信小程序上，都是无法直接从宿主中获取到系统字体文件的。</p>\n\n\n<p class=\"feishu-p\">无字体文件也就无法渲染文本。</p>\n\n\n\n<h5 id=\"heading-fonts-4\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-fonts-4\" class=\"heading-anchor\">#</a>解决方案：</h5>\n\n\n<p class=\"feishu-p\">Flutter For Web 支持加载本地或远端的 ttf / otf 字体文件，默认是从 <a href=\"http://fonts.gstatic.com\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">fonts.gstatic.com</a> 的 API 中加载的。</p>\n\n\n<p class=\"feishu-p\">每次都从 <a href=\"http://fonts.gstatic.com\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">fonts.gstatic.com</a> 加载字体，会影响应用启动速度，所以我们直接把简体中文、英文 ttf 内置到应用包中。</p>\n\n\n\n<h3 id=\"heading-fonts-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-fonts-4\" class=\"heading-anchor\">#</a>自定义字体</h3>\n\n\n<p class=\"feishu-p\">当内置字体无法满足需要时，可以使用参考《<a href=\"https://flutter.cn/docs/cookbook/design/fonts\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://flutter.cn/docs/cookbook/design/fonts</a>》文档添加字体。</p>\n\n\n<p class=\"feishu-p\">对于使用 HTTP 加载字体，先使用 HTTP 或 Dio 下载 Uint8List 再在 Dart 中使用 loadFontFromList 加载。</p>\n\n\n<p class=\"feishu-p\">特别注意：</p>\n\n<ul class=\"feishu-ul\">\n<li>微信有<a href=\"https://developers.weixin.qq.com/miniprogram/dev/framework/ability/domain.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">业务域名</a>限制，如果你需要从 <a href=\"http://fonts.gstatic.com\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">fonts.gstatic.com</a> 加载字体，请务必在微信开发者后台添加它。</li>\n<li>非英文字体，文件大小可能超出分包限制，导致应用无法上传，建议优先使用 HTTP 加载字体。</li>\n<li>大部分字体存在商用版权限制，在使用前务必留意，MPFlutter 不对你使用内置以及自定义字体造成的任何法律问题承担责任。</li>\n</ul>\n\n\n<h3 id=\"heading-fonts-5\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-fonts-5\" class=\"heading-anchor\">#</a>使用 MiniTex 进行文本渲染</h3>\n\n\n<p class=\"feishu-p\">你可以使用 MiniTex 文本渲染器替代 Skia 内置的文本渲染能力，使用 MiniTex 不需要在应用包内置字体，也不需要从 HTTP 服务器加载字体，并支持多国语言、Emoji。</p>\n\n\n<p class=\"feishu-p\">要了解更多 MiniTex 的信息，请点击这里《<a href=\"https://mpflutter.feishu.cn/wiki/JT9kwRkWIiekEMkWxg9cIAITnbd\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">MiniTex 文本渲染器</a>》。</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-fonts-1", "title": "3.3 字体使用与优化配置", "level": 2}, {"id": "heading-fonts-2", "title": "应用包内置字体", "level": 3}, {"id": "heading-fonts-3", "title": "为什么要指定字体文件？", "level": 3}, {"id": "heading-fonts-4", "title": "自定义字体", "level": 3}, {"id": "heading-fonts-5", "title": "使用 MiniTex 进行文本渲染", "level": 3}], "wordCount": 1103, "readTime": 3, "file": "构建指南_字体使用_U1QPw2Am7ii0bwkNbp1cuufgnah.html"}, {"id": "subpackaging", "chapterId": "chap_build_guide", "chapterTitle": "三、构建指南", "title": "小程序智能分包", "icon": "📂", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-subpackaging-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-subpackaging-1\" class=\"heading-anchor\">#</a>3.4 小程序分包指南</h2>\n\n\n<p class=\"feishu-p\">MPFlutter 支持智能分包，帮助你轻松应对微信小程序、抖音小程序的包体积限制。</p>\n\n\n\n<h3 id=\"heading-subpackaging-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-subpackaging-2\" class=\"heading-anchor\">#</a>为什么需要分包？</h3>\n\n\n<p class=\"feishu-p\">微信小程序官方文档：<a href=\"https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages.html</a></p>\n\n\n<p class=\"feishu-p\">主要原因是微信小程序官方要求，对于主包要求不超过 2M，主包 + 所有分包整体不得超过 20M。</p>\n\n\n<p class=\"feishu-p\">这种要求，是合理的，如果包体积不作任何限制，用户首次加载小程序体验会很差。</p>\n\n\n<p class=\"feishu-p\">最初微信小程序的要求是整个应用包不得超过 2M，然而随着小程序的复杂度提升，2M 肯定是不够的，所以官方提供了分包加载支持。</p>\n\n\n<p class=\"feishu-p\">分包是 MPFlutter 必须的，一个单纯的 Hello, World 程序，main.dart.js 代码就已经占去 1.7M，再加上字体、图片等资源文件，绝对是超过 2M 的。</p>\n\n\n<p class=\"feishu-p\">从 2.4.0 版本开始，main.dart.js 可保持在 700K 内，如果分包大小仍然超出限制，仍然需要按照下述方法执行。</p>\n\n\n\n<h3 id=\"heading-subpackaging-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-subpackaging-3\" class=\"heading-anchor\">#</a>代码分包的方法</h3>\n\n\n<p class=\"feishu-p\">针对 main.dart.js 体积过大的问题，Flutter For Web 官方已有提供 defered load 方案。</p>\n\n\n<p class=\"feishu-p\">以下是一个例子，用于将 box.dart 拆到分包中。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:flutter/material.dart&#x27;;\nimport &#x27;box.dart&#x27; deferred as box;\n\nclass SomeWidget extends StatefulWidget {\n  const SomeWidget({super.key});\n\n  @override\n  State&lt;SomeWidget&gt; createState() =&gt; _SomeWidgetState();\n}\n\nclass _SomeWidgetState extends State&lt;SomeWidget&gt; {\n  late Future&lt;void&gt; _libraryFuture;\n\n  @override\n  void initState() {\n    _libraryFuture = box.loadLibrary();\n    super.initState();\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    return FutureBuilder&lt;void&gt;(\n      future: _libraryFuture,\n      builder: (context, snapshot) {\n        if (snapshot.connectionState == ConnectionState.done) {\n          if (snapshot.hasError) {\n            return Text(&#x27;Error: ${snapshot.error}&#x27;);\n          }\n          return box.DeferredBox();\n        }\n        return const CircularProgressIndicator();</code></pre>\n                </div>\n\n\n", "headings": [{"id": "heading-subpackaging-1", "title": "3.4 小程序分包指南", "level": 2}, {"id": "heading-subpackaging-2", "title": "为什么需要分包？", "level": 3}, {"id": "heading-subpackaging-3", "title": "代码分包的方法", "level": 3}], "wordCount": 1691, "readTime": 5, "file": "构建指南_分包_SOyMwWah7iWNiWkRmtncOZepnzh.html"}, {"id": "extensions", "chapterId": "chap_extensions", "chapterTitle": "四、扩展指南与 Package 生态", "title": "扩展指南概述", "icon": "🧩", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-extensions-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-extensions-1\" class=\"heading-anchor\">#</a>四、扩展指南与 Package 生态</h2>\n\n\n", "headings": [{"id": "heading-extensions-1", "title": "四、扩展指南与 Package 生态", "level": 2}], "wordCount": 23, "readTime": 1, "file": "08_扩展指南_ZoBmwKjNLijOIVkmG4HcRqqjn4b.html"}, {"id": "use_packages", "chapterId": "chap_extensions", "chapterTitle": "四、扩展指南与 Package 生态", "title": "在 MPFlutter 里使用 Packages", "icon": "🔌", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-use_packages-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-use_packages-1\" class=\"heading-anchor\">#</a>4.1 在 MPFlutter 里使用 Packages</h2>\n\n\n<p class=\"feishu-p\">MPFlutter 支持开发者使用 Flutter 生态中已有的 Packages。</p>\n\n\n\n<h3 id=\"heading-use_packages-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-use_packages-2\" class=\"heading-anchor\">#</a>可用的 Package</h3>\n\n<ul class=\"feishu-ul\">\n<li>完全不依赖 Platform Channel 的 Package，可以直接引入使用。例如以下 Package：</li>\n<li>Dio</li>\n<li>GetX</li>\n<li>Provider</li>\n<li>json_serializable</li>\n<li>fl_chart</li>\n<li>......</li>\n<li>依赖 Flutter For Web 的 Package，需要 MPFlutter 官方完成对应的小程序 API -> JS 适配才可以使用。以下 Package 已由 MPFlutter 官方完成适配，你可以直接引入使用：</li>\n<li>http</li>\n<li>shared_preferences</li>\n</ul>\n\n\n<h3 id=\"heading-use_packages-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-use_packages-3\" class=\"heading-anchor\">#</a>不可用的 Package</h3>\n\n<ul class=\"feishu-ul\">\n<li>依赖 Platform Channel  的 Package，并且高度依赖设备实现。</li>\n</ul>\n\n<p class=\"feishu-p\">例如：</p>\n\n<ul class=\"feishu-ul\">\n<li>geolocator</li>\n<li>url_launcher</li>\n<li>image_picker</li>\n<li>cached_network_image</li>\n<li>path_provider</li>\n<li>依赖 PlatformView 实现的 Package，也是不可用的。</li>\n</ul>\n\n<p class=\"feishu-p\">例如：</p>\n\n<ul class=\"feishu-ul\">\n<li>google_maps_flutter</li>\n<li>flutter_video_view</li>\n<li>webview_flutter</li>\n</ul>\n\n<p class=\"feishu-p\">针对这些需求，MPFlutter 官方后续会推出方案，支持对应的功能。</p>\n\n\n<p class=\"feishu-p\">你也可以通过阅读微信小程序文档，了解对应的 API 是否可覆盖你的场景。</p>\n\n\n<p class=\"feishu-p\">你可以通过《<a href=\"https://weypl4zsnv.feishu.cn/wiki/KAs6wdMfRiQ1Y0kGB5CcxzMgntc\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">微信小程序 API 封装库</a> 》文档，学习如何使用 mpflutter_wechat_api 库，便利地使用 Dart 调用微信小程序 API。</p>\n\n\n\n<h3 id=\"heading-use_packages-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-use_packages-4\" class=\"heading-anchor\">#</a>忽略不可用的 Package</h3>\n\n\n<p class=\"feishu-p\">不可用的 Package 可能导致小程序无法启动，最常见的表现是冷启动白屏，即使你不在 dart 中调用这些不兼容包，也可能导致白屏。</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-use_packages-1", "title": "4.1 在 MPFlutter 里使用 Packages", "level": 2}, {"id": "heading-use_packages-2", "title": "可用的 Package", "level": 3}, {"id": "heading-use_packages-3", "title": "不可用的 Package", "level": 3}, {"id": "heading-use_packages-4", "title": "忽略不可用的 Package", "level": 3}], "wordCount": 831, "readTime": 2, "file": "扩展指南_在 MPFlutter 里使用 Packages_HWPvwnLici0TsYkJoeqc4afTnac.html"}, {"id": "develop_package", "chapterId": "chap_extensions", "chapterTitle": "四、扩展指南与 Package 生态", "title": "自主开发 Package", "icon": "🛠️", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-develop_package-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-develop_package-1\" class=\"heading-anchor\">#</a>4.2 自主开发 Package</h2>\n\n\n\n<h3 id=\"heading-develop_package-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-develop_package-2\" class=\"heading-anchor\">#</a>开发</h3>\n\n\n<p class=\"feishu-p\">请参考 Flutter 官方文档学习 Package 的开发：</p>\n\n\n<p class=\"feishu-p\"><a href=\"https://flutter.cn/docs/packages-and-plugins/developing-packages#web\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://flutter.cn/docs/packages-and-plugins/developing-packages#web</a></p>\n\n\n<p class=\"feishu-p\">MPFlutter Package 可直接复用 Flutter For Web Package，使用 dart:js 与 JavaScript API 进行跨语言交互。</p>\n\n\n<p class=\"feishu-p\">如果需要开发特定的微信小程序平台插件，请参考 《<a href=\"https://mpflutter.feishu.cn/wiki/Oc9Kw42X5i8naHkNeo8c6JKGnPc\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">自制微信小程序 Package</a>》。</p>\n\n\n\n<h3 id=\"heading-develop_package-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-develop_package-3\" class=\"heading-anchor\">#</a>发布</h3>\n\n\n<p class=\"feishu-p\">同样的，请参考 Flutter 官方文档，发布 Package 到 pub.dev，然后你就可以与公域开发者分享你的扩展包了。</p>\n\n\n", "headings": [{"id": "heading-develop_package-1", "title": "4.2 自主开发 Package", "level": 2}, {"id": "heading-develop_package-2", "title": "开发", "level": 3}, {"id": "heading-develop_package-3", "title": "发布", "level": 3}], "wordCount": 337, "readTime": 1, "file": "扩展指南_自主开发 Package_K4SYw4XNfim6Kgk446tcH1KGnUe.html"}, {"id": "advanced", "chapterId": "chap_advanced", "chapterTitle": "五、进阶指南", "title": "进阶指南规划与深度架构", "icon": "🚀", "date": "2024年1月12日", "html": "\n<h2 id=\"heading-advanced-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-advanced-1\" class=\"heading-anchor\">#</a>五、进阶指南</h2>\n\n\n\n\n<div class=\"callout-card callout-note\"><div class=\"callout-header\"><span class=\"callout-icon\">📝</span><span class=\"callout-title\">说明</span></div><div class=\"callout-content\">\n<p class=\"feishu-p\"><strong>进阶开发与架构指南</strong></p>\n\n<p class=\"feishu-p\">本章节面向需要进行深度定制、高性能架构优化、复杂原生混合工程集成的开发者。</p>\n\n\n</div></div>\n\n\n\n<h3 id=\"heading-advanced-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-advanced-2\" class=\"heading-anchor\">#</a>1. 架构优化方向</h3>\n<ul class=\"feishu-ul\">\n<li><strong>渲染树精简</strong>：充分利用 <code class=\"inline-code\">RepaintBoundary</code> 减少 WebGL 脏区域重绘，降低小程序 CPU / GPU 负载。</li>\n<li><strong>内存优化</strong>：在小程序单页面栈切换时，主动释放未引用的 ImageProvider 缓存与网络资源。</li>\n<li><strong>自定义 WebGL 渲染管线</strong>：通过扩展 mpflutter_core，支持接入自研 WebGL 滤镜或着色器。</li>\n</ul>\n\n\n<h3 id=\"heading-advanced-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-advanced-3\" class=\"heading-anchor\">#</a>2. 原生混合开发</h3>\n<ul class=\"feishu-ul\">\n<li><strong>同层渲染集成</strong>：使用 Platform View Overlay 与原生组件（如 live-pusher, camera, map, video）无缝融合。</li>\n<li><strong>多页面栈与分包分流</strong>：将大型应用的主业务与次要业务划分为不同分包，主包控制在 2MB 以内。</li>\n</ul>\n\n\n<h3 id=\"heading-advanced-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-advanced-4\" class=\"heading-anchor\">#</a>3. 持续集成与发布自动化</h3>\n<ul class=\"feishu-ul\">\n<li>通过命令行集成 <code class=\"inline-code\">dart2js</code> 与构建脚本，无缝对接 GitLab CI / GitHub Actions 自动构建与微信小程序预览码生成。</li>\n</ul>\n\n\n\n", "headings": [{"id": "heading-advanced-1", "title": "五、进阶指南", "level": 2}, {"id": "heading-advanced-2", "title": "1. 架构优化方向", "level": 3}, {"id": "heading-advanced-3", "title": "2. 原生混合开发", "level": 3}, {"id": "heading-advanced-4", "title": "3. 持续集成与发布自动化", "level": 3}], "wordCount": 484, "readTime": 1, "file": "09_进阶指南_XOQiwrvBKiCXshkvJxkc4ByhnQd.html"}, {"id": "minitex", "chapterId": "chap_minitex", "chapterTitle": "六、MiniTex 免加载字体文本渲染器", "title": "MiniTex 概述与使用", "icon": "🔤", "date": "2024年6月14日", "html": "\n<h2 id=\"heading-minitex-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-minitex-1\" class=\"heading-anchor\">#</a>5.1 MiniTex 概述与使用</h2>\n\n\n<p class=\"feishu-p\">MiniTex 是一个文本渲染器，同时具备文本排版能力，借助 MiniTex，Flutter Web CanvasKit 应用可以在不加载字体文件的情况下，依然可以渲染多国语言。</p>\n\n\n<p class=\"feishu-p\">具体原理，可阅读《<a href=\"https://mpflutter.feishu.cn/wiki/B62mwAlrzilcoukX16qcupsNndf\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">免加载字体的 Flutter 文本渲染器 —— MiniTex</a>》。</p>\n\n\n\n<h4 id=\"heading-minitex-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-minitex-2\" class=\"heading-anchor\">#</a>使用方法</h4>\n\n\n\n<h5 id=\"heading-minitex-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-minitex-3\" class=\"heading-anchor\">#</a>MPFlutter</h5>\n\n\n<p class=\"feishu-p\">MPFlutter 2.3.0 版本已内置 MiniTex，你只需要在《<a href=\"https://mpflutter.feishu.cn/wiki/I45wwTI9XiH0AXkvQUEc2jZ8nFP\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">编写第一个 MPFlutter 微信小程序</a>》下载 MiniTex 版本的 awesome_project 就可以开始体验。</p>\n\n\n<p class=\"feishu-p\">如果不希望从模板工程开始，可以<a href=\"https://mpflutter.feishu.cn/wiki/LBtYwgw3Yi0BQzk6XTIcLOVrnZc\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">升级相关依赖到 2.3.0 版本</a>，然后：</p>\n\n\n<p class=\"feishu-p\">1.在 main.dart 中配置 fontFamily。</p>\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">// main.dart\nclass MyApp extends StatelessWidget {\n  const MyApp({super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return MaterialApp(\n      title: &#x27;Flutter Demo&#x27;,\n      theme: ThemeData(\n        // 设置 ThemeData 的 fontFamily 和 fontFamilyFallback 为以下值。\n        fontFamily: &quot;MiniTex&quot;,\n        fontFamilyFallback: [&quot;MiniTex&quot;],\n      ),\n      // ...\n    );\n  }\n}</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">2.在 pubspec.yaml 中删除字体依赖。</p>\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\"># pubspec.yaml\nname: awesome_project\ndescription: A new Flutter project.\npublish_to: &#x27;none&#x27;\n\nversion: 1.0.0+1\n\n\n  sdk: &#x27;&gt;=3.1.5 &lt;4.0.0&#x27;\n\n\n\n    sdk: flutter\n  mpflutter_core: ^2.4.0</code></pre>\n                </div>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-minitex-1", "title": "5.1 MiniTex 概述与使用", "level": 2}, {"id": "heading-minitex-2", "title": "使用方法", "level": 4}], "wordCount": 1445, "readTime": 4, "file": "10_MiniTex 文本渲染器_JT9kwRkWIiekEMkWxg9cIAITnbd.html"}, {"id": "minitex_deep", "chapterId": "chap_minitex", "chapterTitle": "六、MiniTex 免加载字体文本渲染器", "title": "免加载字体的 Flutter 文本渲染器 —— MiniTex", "icon": "📖", "date": "2024年6月14日", "html": "\n<h2 id=\"heading-minitex_deep-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-minitex_deep-1\" class=\"heading-anchor\">#</a>5.2 MiniTex 技术原理与架构解析</h2>\n\n\n<p class=\"feishu-p\">MiniTex 是一个文本渲染器，同时具备文本排版能力，借助 MiniTex，Flutter Web CanvasKit 应用可以在不加载字体文件的情况下，依然可以渲染多国语言。</p>\n\n\n<p class=\"feishu-p\">MiniTex 支持在 MPFlutter 和 Flutter Web 中使用，开源，免费。</p>\n\n\n<p class=\"feishu-p\">本文主要介绍 MiniTex 的实现原理以及使用方法。</p>\n\n\n\n<h3 id=\"heading-minitex_deep-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-minitex_deep-2\" class=\"heading-anchor\">#</a>一、背景</h3>\n\n\n<p class=\"feishu-p\">Flutter Web 存在 CanvasKit 渲染器，该渲染器使用 Skia WebAssembly 驱动，在该模式下渲染文本需要通过加载 ttf 字体文件实现，这种方式对于 Latin 系语言相对友好，但对于汉语、日语等方块字语言则不太友好。</p>\n\n\n<p class=\"feishu-p\">原因在于：</p>\n\n<ul class=\"feishu-ul\">\n<li>方块字语言字符集较大，故未经裁剪的简体中文字体文件一般都超过 5M；</li>\n<li>字体版权不容易处理，可商用字体选择范围少，一般是使用 Noto 系列字体；</li>\n<li>Emoji 文本无法渲染，或渲染效果无法对齐原生。</li>\n</ul>\n\n<p class=\"feishu-p\">MPFlutter 也同样遇到上述问题，我们是通过裁剪 Noto Sans SC 并内置在应用包中，以驱动中文文本渲染的，这也导致 MPFlutter 初始包大小超过 5M。</p>\n\n\n<p class=\"feishu-p\">我们需要另辟蹊径解决这些问题。</p>\n\n\n\n<h3 id=\"heading-minitex_deep-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-minitex_deep-3\" class=\"heading-anchor\">#</a>二、技术目标</h3>\n\n\n<p class=\"feishu-p\">使用 JavaScript + Web Canvas 2D 编写一个在功能上对齐 Skia 文本渲染能力的库。</p>\n\n\n<p class=\"feishu-p\">该库需要是：</p>\n\n<ul class=\"feishu-ul\">\n<li>跨平台的，至少是微信小程序、Web 都可用的；</li>\n<li>在接口上对齐 Skia，以保证 Flutter / Dart 的调用是一致的；</li>\n<li>不能依赖外部的 TTF 字体文件，且需要保证文本换行、描边、阴影、装饰等功能与 Skia 实现一致。</li>\n</ul>\n\n\n<h3 id=\"heading-minitex_deep-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-minitex_deep-4\" class=\"heading-anchor\">#</a>三、原理分析</h3>\n\n\n<p class=\"feishu-p\">Skia 是一个开源的 2D 渲染库，主要由矢量绘制、文本绘制、位图绘制功能组合而成。</p>\n\n\n<p class=\"feishu-p\">通过阅读 Flutter 和 Skia 源码，我们梳理出相关的渲染流程，如下图：</p>\n\n\n", "headings": [{"id": "heading-minitex_deep-1", "title": "5.2 MiniTex 技术原理与架构解析", "level": 2}, {"id": "heading-minitex_deep-2", "title": "一、背景", "level": 3}, {"id": "heading-minitex_deep-3", "title": "二、技术目标", "level": 3}, {"id": "heading-minitex_deep-4", "title": "三、原理分析", "level": 3}], "wordCount": 845, "readTime": 2, "file": "Blog Articles_免加载字体的 Flutter 文本渲染器 —— MiniTex_B62mwAlrzilcoukX16qcupsNndf.html"}, {"id": "wechat_features", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "微信小程序平台特性概述", "icon": "📱", "date": "2024年7月9日", "html": "\n<h2 id=\"heading-wechat_features-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-wechat_features-1\" class=\"heading-anchor\">#</a>六、微信小程序平台特性</h2>\n\n\n", "headings": [{"id": "heading-wechat_features-1", "title": "六、微信小程序平台特性", "level": 2}], "wordCount": 16, "readTime": 1, "file": "11_微信小程序平台特性_FASdwpqeKi2ej8kpALOcsECbnuM.html"}, {"id": "domain", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "业务域名配置与限制", "icon": "🌐", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-domain-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-domain-1\" class=\"heading-anchor\">#</a>6.1 业务域名配置与限制</h2>\n\n\n<p class=\"feishu-p\">MPFlutter 与一般的 Flutter 应用在网络请求上有一定区别，你需要在微信小程序开发者后台添加业务域名，才能使用 http 或者 dio 访问对应 HTTP 服务的数据。</p>\n\n\n<p class=\"feishu-p\">这个限制来自于微信官方，具体操作方法请阅读文档。</p>\n\n\n<p class=\"feishu-p\"><a href=\"https://developers.weixin.qq.com/miniprogram/dev/framework/ability/network.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://developers.weixin.qq.com/miniprogram/dev/framework/ability/network.html</a></p>\n\n\n\n<h4 id=\"heading-domain-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-domain-2\" class=\"heading-anchor\">#</a>哪些域名需要添加？</h4>\n\n\n\n<h5 id=\"heading-domain-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-domain-3\" class=\"heading-anchor\">#</a>常规的 HTTP 请求</h5>\n\n\n<p class=\"feishu-p\">只要你使用到了 http 或者 dio，无论是发起 GET 还是 POST 请求，都需要添加域名到开发者后台。</p>\n\n\n\n<h5 id=\"heading-domain-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-domain-3\" class=\"heading-anchor\">#</a>图片 URL</h5>\n\n\n<p class=\"feishu-p\">无论是使用 Flutter 的 Image 组件，还是第三方提供的 flutter_svg 库，只要对应的 Image 组件有访问互联网上的图片，对应 URL 的域名就需要添加到开发者后台。</p>\n\n\n\n<h5 id=\"heading-domain-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-domain-3\" class=\"heading-anchor\">#</a>字体</h5>\n\n\n<p class=\"feishu-p\">如果你使用到了 Google 字体服务，你需要添加 <a href=\"http://fonts.gstatic.com\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">fonts.gstatic.com</a> 到开发者后台。</p>\n\n\n<p class=\"feishu-p\">由于一个域名只能被添加到 100 个小程序中，如果不能正常添加 Google 的域名，那么你需要自行搭建字体下载服务，全局代理至 <a href=\"http://fonts.gstatic.com\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">fonts.gstatic.com</a> 。</p>\n\n\n<p class=\"feishu-p\">未来 MPFlutter 官方可能提供 SaaS 形式的字体渐进式加载服务，请关注。</p>\n\n\n\n<h4 id=\"heading-domain-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-domain-3\" class=\"heading-anchor\">#</a>调试状态下跳过域名检查</h4>\n\n\n<p class=\"feishu-p\">你可以微信开发者工具 > 项目 > 详情 > 勾选不校验合法域名，这样可以在 PC 预览的情况下，可以免域名校验。</p>\n\n\n<p class=\"feishu-p\">在真机预览的场景，点击右上角【More】按钮，打开【开发调试】就可以免域名校验。</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-domain-1", "title": "6.1 业务域名配置与限制", "level": 2}, {"id": "heading-domain-2", "title": "哪些域名需要添加？", "level": 4}, {"id": "heading-domain-3", "title": "调试状态下跳过域名检查", "level": 4}], "wordCount": 733, "readTime": 2, "file": "微信小程序平台特性_业务域名_ORrawSYFBiGaZfk3OAXcriNrnOb.html"}, {"id": "wechat_api", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "微信小程序 API 封装库 (mpflutter_wechat_api)", "icon": "⚙️", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-wechat_api-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-wechat_api-1\" class=\"heading-anchor\">#</a>6.2 微信小程序 API 封装库 (mpflutter_wechat_api)</h2>\n\n\n<p class=\"feishu-p\">微信小程序提供了一系统的 API，可用于获取以下能力：</p>\n\n<ul class=\"feishu-ul\">\n<li>基础信息</li>\n<li>网络</li>\n<li>本地文件读写</li>\n<li>蓝牙</li>\n<li>支付</li>\n<li>......</li>\n</ul>\n\n<p class=\"feishu-p\">你可以通过微信官方文档了解</p>\n\n\n<p class=\"feishu-p\"><a href=\"https://developers.weixin.qq.com/miniprogram/dev/api/\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://developers.weixin.qq.com/miniprogram/dev/api/</a></p>\n\n\n\n<h4 id=\"heading-wechat_api-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-wechat_api-2\" class=\"heading-anchor\">#</a>封装库</h4>\n\n\n<p class=\"feishu-p\">对于 MPFlutter 应用，如果每一个 API 的调用都需要开发者自行编写 Channel，那是非常麻烦的。</p>\n\n\n<p class=\"feishu-p\">我们特别提供了 <a href=\"https://pub.dev/packages/mpflutter_wechat_api\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">mpflutter_wechat_api</a> 库，这个库提供了 Dart 的调用封装，你不需要编写任何 JavaScript 代码就可以调用微信 API。</p>\n\n\n<p class=\"feishu-p\">添加以下依赖到 pubspec.yaml 就可以使用了：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">\n  mpflutter_wechat_api: {请自行替换成最新版本号}</code></pre>\n                </div>\n\n\n\n<h4 id=\"heading-wechat_api-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-wechat_api-3\" class=\"heading-anchor\">#</a>示例代码</h4>\n\n\n<p class=\"feishu-p\">对于同步返回方法，你可以直接获取结果。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:mpflutter_wechat_api/mpflutter_wechat_api.dart&#x27;;\n\nfinal result = wx.getSystemInfoSync();\nprint(result.model);</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">对于异步返回方法以及带参数的方法，你需要使用 .. 的方法设置 Option 参数。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:mpflutter_wechat_api/mpflutter_wechat_api.dart&#x27;;\n\nwx.getSystemInfoAsync(GetSystemInfoAsyncOption()\n      ..success = (result) {\n        final snackBar = SnackBar(\n          content: Text(&#x27;Device model = ${result.model}&#x27;),\n        );\n        ScaffoldMessenger.of(context).showSnackBar(snackBar);\n      });</code></pre>\n                </div>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-wechat_api-1", "title": "6.2 微信小程序 API 封装库 (mpflutter_wechat_api)", "level": 2}, {"id": "heading-wechat_api-2", "title": "封装库", "level": 4}, {"id": "heading-wechat_api-3", "title": "示例代码", "level": 4}], "wordCount": 1628, "readTime": 5, "file": "微信小程序平台特性_微信小程序 API 封装库_KAs6wdMfRiQ1Y0kGB5CcxzMgntc.html"}, {"id": "platform_view", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "Platform View 原生视图组件", "icon": "🖼️", "date": "2024年7月9日", "html": "\n<h2 id=\"heading-platform_view-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-platform_view-1\" class=\"heading-anchor\">#</a>6.3 Platform View 原生视图组件</h2>\n\n\n<p class=\"feishu-p\">MPFlutter CanvasKit 只负责 Flutter Widgets 渲染，对于特定平台的组件则需要使用 PlatformView 渲染。</p>\n\n\n<p class=\"feishu-p\">PlatformView 的实现，实际上就是在 Canvas 的最上方覆盖一个原生视图，并且该视图跟随 Shadow Widget 移动。</p>\n\n\n<p class=\"feishu-p\">PlatformView 有以下能力限制：</p>\n\n<ul class=\"feishu-ul\">\n<li>层级最高，无法在 PlatformView 上叠加任何视图。</li>\n<li>跟随移动不及时，Shadow Widget 的移动与 PlatformView 不完全同步，因此建议你不要在 ScrollView 中使用。</li>\n<li>不建议在 ListView 的每一个 ListItem 中添加 PlatformView，过多的 PlatformView 会影响性能，请使用其它替代方式使用。</li>\n</ul>\n\n<p class=\"feishu-p\">官方已支持的 PlatformView：</p>\n\n<ul class=\"feishu-ul\">\n<li><a href=\"https://mpflutter.feishu.cn/wiki/QIlpwxyb1iiCqlkMSDvcY219nNc\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">MapView</a></li>\n<li><a href=\"https://mpflutter.feishu.cn/wiki/SVt5wK7GEiKgvDk3WOCcE20Bnge\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">VideoView</a></li>\n<li><a href=\"https://mpflutter.feishu.cn/wiki/Kk5YwA07ziP7ezklvcMcrMh6nye\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">WebView</a></li>\n<li><a href=\"https://mpflutter.feishu.cn/wiki/T4ITw9uUKiWCb7kD0knc7FNenme\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">Button</a></li>\n<li><a href=\"https://mpflutter.feishu.cn/wiki/YWIMwKyzriS685k0PuxceYTjnke\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">Image</a></li>\n<li><a href=\"https://mpflutter.feishu.cn/wiki/EwzjwLJUyiwu4GkNXB5cCCJxnMb\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">Editable</a></li>\n</ul>\n\n<p class=\"feishu-p\">官方未支持的：</p>\n\n<ul class=\"feishu-ul\">\n<li>Camara</li>\n<li>Ad</li>\n</ul>\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-platform_view-1", "title": "6.3 Platform View 原生视图组件", "level": 2}], "wordCount": 485, "readTime": 1, "file": "微信小程序平台特性_Platform View_SBAGwVMiVig6aok7EYYcsYKZnoM.html"}, {"id": "platform_view_overlay", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "Platform View Overlay 全屏覆盖方案", "icon": "📑", "date": "2024年7月9日", "html": "\n<h2 id=\"heading-platform_view_overlay-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-platform_view_overlay-1\" class=\"heading-anchor\">#</a>6.4 Platform View Overlay 全屏覆盖方案</h2>\n\n\n<p class=\"feishu-p\">该特性要求使用 2.7.0+ 版本</p>\n\n\n<p class=\"feishu-p\">Platform View 默认是不支持在其上方添加任何 Flutter Widget 的，因为 Platform View 的层级最高。</p>\n\n\n<p class=\"feishu-p\">但是，这会导致地图应用难以使用 MPFlutter 开发。</p>\n\n\n<p class=\"feishu-p\">为此，官方特别提供 Overlay 方案，原理是通过将 Scaffold 的背景变成透明，将 Platform View 置于画布最下方实现的。</p>\n\n\n\n<h4 id=\"heading-platform_view_overlay-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-platform_view_overlay-2\" class=\"heading-anchor\">#</a>用法</h4>\n\n\n<p class=\"feishu-p\">请参考以下代码开发。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:flutter/material.dart&#x27;;\nimport &#x27;package:mpflutter_core/mpflutter_core.dart&#x27;;\nimport &#x27;package:mpflutter_wechat_api/mpflutter_wechat_api.dart&#x27;;\nimport &#x27;package:mpflutter_wechat_mapview/mpflutter_wechat_mapview.dart&#x27;;\n\nclass WXMapView extends StatefulWidget {\n  const WXMapView({super.key});\n\n  @override\n  State&lt;WXMapView&gt; createState() =&gt; _WXMapViewState();\n}\n\nclass _WXMapViewState extends State&lt;WXMapView&gt; {\n  final controller = MPFlutter_Wechat_MapViewController();\n  String selectedAddress = &quot;&quot;;\n\n  @override\n  Widget build(BuildContext context) {\n    return MPFlutterPlatformOverlaySupport( // 使用 MPFlutterPlatformOverlaySupport 包裹 Scaffold\n      child: Scaffold(\n        backgroundColor: Colors.transparent, // Scaffold 的背景必须是透明的\n        appBar: AppBar(\n          title: const Text(&#x27;WXMapView&#x27;),\n        ),\n        body: Stack( // 使用 Stack 布局地图和 Overlay Widgets\n          children: [\n            Positioned.fill(\n              child: MPFlutter_Wechat_MapView(\n                controller: controller,\n                longitude: 113.347698,\n                latitude: 23.100022,\n                showLocation: true,\n                markers: const [\n                  {\n                    &quot;id&quot;: &quot;HeJi&quot;,\n                    &quot;title&quot;: &quot;赫基大厦&quot;,\n                    &quot;longitude&quot;: 113.347698,\n                    &quot;latitude&quot;: 23.100022,\n                  },\n                  {\n                    &quot;id&quot;: &quot;WeChat&quot;,\n                    &quot;title&quot;: &quot;微信总部&quot;,</code></pre>\n                </div>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-platform_view_overlay-1", "title": "6.4 Platform View Overlay 全屏覆盖方案", "level": 2}, {"id": "heading-platform_view_overlay-2", "title": "用法", "level": 4}], "wordCount": 2117, "readTime": 7, "file": "微信小程序平台特性_Platform View Overlay_DUPFwi89nixeQ7k4D28cmboWnog.html"}, {"id": "share", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "分享到会话、朋友圈与单页模式", "icon": "🔗", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-share-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-share-1\" class=\"heading-anchor\">#</a>6.5 分享到会话、朋友圈与单页模式</h2>\n\n\n\n<h4 id=\"heading-share-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-share-2\" class=\"heading-anchor\">#</a>分享到会话</h4>\n\n\n<p class=\"feishu-p\">我们是根据微信官方提供的 <a href=\"https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">onShareAppMessage</a> 回调实现的，如有疑问请先阅读官方文档。</p>\n\n\n\n<h5 id=\"heading-share-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-share-3\" class=\"heading-anchor\">#</a>方法一、直接使用 MPFlutterWechatAppDelegate 类</h5>\n\n\n<p class=\"feishu-p\">MPFlutterWechatAppDelegate 类用于封装来自微信小程序的生命周期事件，你可以在这里得到小程序切后台、切前台、从分享卡片进入等回调。</p>\n\n\n<p class=\"feishu-p\">onShareAppMessage 封装在这个类中，你可以直接在 onShareAppMessage 中返回符合微信官方要求的字段，并且在  onLaunch / onEnter 中响应用户路由。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">class MyAppDelegate {\n  late MPFlutterWechatAppDelegate appDelegate;\n\n  MyAppDelegate() {\n    appDelegate = MPFlutterWechatAppDelegate(\n      onShareAppMessage: (detail) {\n        print(&quot;当用户点击分享给朋友时，回调，应组装对应的 Map 信息，用于展示和回跳。&quot;);\n        return onShareAppMessage(detail);\n      },\n      // 如果你需要异步返回 shareAppMessage 结果，请使用这个回调。\n      // 你最多只有 3 秒时间处理异步请求。\n      // onShareAppMessageAsync: (detail, callback) async {\n      //   await Future.delayed(const Duration(milliseconds: 1500));\n      //   callback({\n      //     &quot;title&quot;: &quot;delay&quot;,\n      //     &quot;path&quot;: &quot;pages/index/index&quot;,\n      //   });\n      // },\n      onLaunch: (query) async {\n        print(&quot;应用冷启动时，会收到回调，应根据 query 决定是否要跳转页面。&quot;);\n        await Future.delayed(Duration(seconds: 1)); // 加个延时，保障 navigator 已初始化。\n        onLaunchOrEnter(query);\n      },\n      onEnter: (query) {\n        print(&quot;应用热启动（例如用户从分享卡片进入小程序）时，会收到回调，应根据 query 决定是否要跳转页面。&quot;);\n        onLaunchOrEnter(query);\n      },\n    );\n  }\n\n  Map onShareAppMessage(mpjs.JSObject detail) {\n    final currentRoute = MPNavigatorObserver.currentRoute;\n    if (currentRoute != null) {\n      final routeName = currentRoute.settings.name;\n      return {\n        &quot;title&quot;: (() {\n          if (routeName == &quot;/map_demo&quot;) {\n            return &quot;Map Demo&quot;;\n          } else {\n            return &quot;Awesome Project&quot;;\n          }\n        })(),</code></pre>\n                </div>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-share-1", "title": "6.5 分享到会话、朋友圈与单页模式", "level": 2}, {"id": "heading-share-2", "title": "分享到会话", "level": 4}], "wordCount": 1986, "readTime": 6, "file": "微信小程序平台特性_分享到会话、朋友圈_KDWRwdmnQiuqkokcWKmc3ig2nKg.html"}, {"id": "custom_wechat_pkg", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "自制微信小程序 Package 指南", "icon": "📦", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-custom_wechat_pkg-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-custom_wechat_pkg-1\" class=\"heading-anchor\">#</a>6.6 自制微信小程序 Package 指南</h2>\n\n\n<p class=\"feishu-p\">如果本文档提供的 mpflutter_wechat_api 和 Platform View 不能满足你的需要，你可以通过自制 Package 实现个性化能力。</p>\n\n\n<p class=\"feishu-p\">一个 MPFlutter Plugin 和普通的 Flutter Plugin 没有本质上的区别，它们都可以上传到 pub.dev。</p>\n\n\n<p class=\"feishu-p\">Package Name 必须以  mpflutter_wechat_ 开头，否则相关 JS 和 WXML 产物不会被打包到小程序中。</p>\n\n\n\n<h4 id=\"heading-custom_wechat_pkg-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-custom_wechat_pkg-2\" class=\"heading-anchor\">#</a>Simple Plugin</h4>\n\n\n<p class=\"feishu-p\">这是一种可通过 Dart 调用 JavaScript 的插件，它不包含任何界面逻辑。</p>\n\n\n<p class=\"feishu-p\">从以下模板工程开始开发：</p>\n\n\n\n<h5 id=\"heading-custom_wechat_pkg-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-custom_wechat_pkg-3\" class=\"heading-anchor\">#</a>源码解读</h5>\n\n\n<p class=\"feishu-p\">mpflutter_wechat_awesome_package.dart</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:mpflutter_core/mpjs/mpjs.dart&#x27; as mpjs;\n\nclass MPFlutter_Wechat_AwesomePackage {\n  MPFlutter_Wechat_AwesomePackage();\n\n  void sayHello() {\n    final newObjectFromJavaScript = mpjs.JSObject(\n      &quot;MPFlutter_Wechat_AwesomePackage&quot;,\n    );\n    final returnValue = newObjectFromJavaScript.callMethod(\n      &quot;sayHello&quot;,\n      [&quot;Pony&quot;], // 也可以传入 Function 到 JS 环境用于回调，例如 [(String arg1) { print(arg1); }]\n    );\n    print(&#x27;value from javascripot&#x27; + returnValue);\n  }\n}\n</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">mpjs 是由 MPFlutter 提供的 JavaScript FFI 封装，使用 mpjs 可以很方便地访问 JS 上下文。</p>\n\n\n<p class=\"feishu-p\">在这里：</p>\n\n\n<p class=\"feishu-p\">1.通过 new mpjs.JSObject 创建一个来自于 JavaScript 环境的对象</p>\n\n<p class=\"feishu-p\">2.调用该对象的 sayHello 方法，参数为 Pony。</p>\n\n<p class=\"feishu-p\">3.获取 sayHello 的返回值，并打印。</p>\n\n<p class=\"feishu-p\">wechat/main.js</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">javascript</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-javascript\">class MPFlutter_Wechat_AwesomePackage {\n  sayHello(to) {\n    if (to) {</code></pre>\n                </div>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-custom_wechat_pkg-1", "title": "6.6 自制微信小程序 Package 指南", "level": 2}, {"id": "heading-custom_wechat_pkg-2", "title": "Simple Plugin", "level": 4}], "wordCount": 1629, "readTime": 5, "file": "微信小程序平台特性_自制微信小程序 Package_Oc9Kw42X5i8naHkNeo8c6JKGnPc.html"}, {"id": "audioplayers", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "audioplayers 音频播放适配", "icon": "🎵", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-audioplayers-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-audioplayers-1\" class=\"heading-anchor\">#</a>6.7 audioplayers 音频播放适配</h2>\n\n\n<p class=\"feishu-p\">MPFlutter 已完成对 audioplayers 库的适配工作，你可以在微信小程序、微信小游戏中使用 audioplayers 库进行音频播放操作。</p>\n\n\n<p class=\"feishu-p\">只需要在 pubspec.yaml 中添加以下依赖就可以：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">\n  audioplayers: ^5.2.0\n\n\n\n      url: https://github.com/mpflutter/audioplayers.git\n      ref: mpflutter-v5.2.1\n      path: packages/audioplayers_web</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">具体 audioplayers 用法请参考 <a href=\"https://github.com/bluefireteam/audioplayers\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://github.com/bluefireteam/audioplayers</a></p>\n\n\n\n<h4 id=\"heading-audioplayers-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-audioplayers-2\" class=\"heading-anchor\">#</a>InnerAudio</h4>\n\n\n<p class=\"feishu-p\">MPFlutter 针对 audioplayers 的实现是使用 WebAudio API 的，WebAudio API 已知可能造成内存泄漏，是微信小程序的问题。</p>\n\n\n<p class=\"feishu-p\">开源社区有基于 <a href=\"https://developers.weixin.qq.com/miniprogram/dev/api/media/audio/InnerAudioContext.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">InnerAudio</a> 的封装，建议优先使用。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">\n  audioplayers: ^5.2.0\n\n\n\n      url: https://github.com/swiftdo/audioplayers.git\n      ref: mpflutter-v5.2.1-inner\n      path: packages/audioplayers_web</code></pre>\n                </div>\n\n\n\n<h4 id=\"heading-audioplayers-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-audioplayers-3\" class=\"heading-anchor\">#</a>静音状态</h4>\n\n\n<p class=\"feishu-p\">默认情况，小程序的声音会遵循设备的静音设置，如果你需要在静音的情况下播放声音，可以调用以下微信 API。</p>\n\n\n<p class=\"feishu-p\"><a href=\"https://developers.weixin.qq.com/miniprogram/dev/api/media/audio/wx.setInnerAudioOption.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://developers.weixin.qq.com/miniprogram/dev/api/media/audio/wx.setInnerAudioOption.html</a></p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-audioplayers-1", "title": "6.7 audioplayers 音频播放适配", "level": 2}, {"id": "heading-audioplayers-2", "title": "InnerAudio", "level": 4}, {"id": "heading-audioplayers-3", "title": "静音状态", "level": 4}], "wordCount": 1256, "readTime": 4, "file": "微信小程序平台特性_audioplayers_GMMYwi7LLiiO27kG1Z1cw0SPnXg.html"}, {"id": "splash", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "Splash 闪屏机制与配置", "icon": "✨", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-splash-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-splash-1\" class=\"heading-anchor\">#</a>6.8 Splash 闪屏机制与配置</h2>\n\n\n\n<h4 id=\"heading-splash-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-splash-2\" class=\"heading-anchor\">#</a>为什么需要闪屏</h4>\n\n\n<p class=\"feishu-p\">闪屏主要用于小程序冷启动时，避免用户看到白屏而存在的。</p>\n\n\n<p class=\"feishu-p\">为什么用户会看到白屏？</p>\n\n<ul class=\"feishu-ul\">\n<li>Canvas 以及 CanvasKit 的初始化，需要一定时间。</li>\n<li>Flutter Framework 启动过程中，需要初始化各种依赖。</li>\n<li>分包加载过程，需要从远端下载资源、代码。</li>\n</ul>\n\n\n<h4 id=\"heading-splash-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-splash-3\" class=\"heading-anchor\">#</a>闪屏的展示、隐藏逻辑</h4>\n\n\n<p class=\"feishu-p\">默认的闪屏会在冷启动时展示，在 runMPApp 后隐藏。</p>\n\n\n<p class=\"feishu-p\">你可以通过 MPFlutterSplashManager 进一步控制闪屏的展示、隐藏时机。</p>\n\n\n\n<h4 id=\"heading-splash-4\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-splash-4\" class=\"heading-anchor\">#</a>自定义闪屏内容</h4>\n\n\n<p class=\"feishu-p\">默认的闪屏是一个无限循环的 Loading 图标。</p>\n\n\n<p class=\"feishu-p\">你可以通过修改 wechat/pages/index/splash.wxml 中的代码，自定义闪屏内容。</p>\n\n\n<p class=\"feishu-p\">这需要一定的原生小程序开发知识。</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-splash-1", "title": "6.8 Splash 闪屏机制与配置", "level": 2}, {"id": "heading-splash-2", "title": "为什么需要闪屏", "level": 4}, {"id": "heading-splash-3", "title": "闪屏的展示、隐藏逻辑", "level": 4}, {"id": "heading-splash-4", "title": "自定义闪屏内容", "level": 4}], "wordCount": 382, "readTime": 1, "file": "微信小程序平台特性_Splash 闪屏_Rjlwwd3Puib14tkeToIcbUsRnwg.html"}, {"id": "tap_request", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "Tap Request 用户手势限制问题", "icon": "👆", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-tap_request-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-tap_request-1\" class=\"heading-anchor\">#</a>6.9 Tap Request 用户手势限制问题</h2>\n\n\n<p class=\"feishu-p\">要求 mpflutter_wechat_button 0.0.3 以上版本</p>\n\n\n<p class=\"feishu-p\">微信小程序出于安全考虑，对于部分 API 是要求用户 Tap 以后才允许触发的。</p>\n\n\n<p class=\"feishu-p\">例如 wx.requestSubscribeMessage 这个 API，如果是非 Tap 触发则会报 fail can only be invoked by user TAP gesture 错误。</p>\n\n\n\n<h5 id=\"heading-tap_request-2\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-tap_request-2\" class=\"heading-anchor\">#</a>解决方案</h5>\n\n\n<p class=\"feishu-p\">使用 Platform View Button 组件可以解决问题，需要在 onTap 回调中立刻调用对应 API。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:mpflutter_wechat_button/mpflutter_wechat_button.dart&#x27;;\n\nMPFlutter_Wechat_Button(\n  onTap: (_) {\n    wx.requestSubscribeMessage(\n      RequestSubscribeMessageOption()\n        ..tmplIds = [&quot;123&quot;]\n        ..success = (result) {\n          print(&#x27;success&#x27;);\n        }\n        ..fail = (result) {\n          print(&#x27;fail&#x27;);\n          print(result.errCode);\n          print(result.errMsg);\n        },\n    );\n  },\n  child: MaterialButton(\n    onPressed: () {},\n    child: Text(&#x27;Wechat API Test&#x27;),\n  ),\n),</code></pre>\n                </div>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-tap_request-1", "title": "6.9 Tap Request 用户手势限制问题", "level": 2}], "wordCount": 1072, "readTime": 3, "file": "微信小程序平台特性_Tap Request 问题_R0HbwZnz1ivmSkkmLdOcEWdan3i.html"}, {"id": "dark_mode", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "Dark Mode 暗色模式适配", "icon": "🌙", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-dark_mode-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-dark_mode-1\" class=\"heading-anchor\">#</a>6.10 Dark Mode 暗色模式适配</h2>\n\n\n<p class=\"feishu-p\">已支持，要求 MPFlutter 2.1.0 版本。</p>\n\n\n<p class=\"feishu-p\">请先阅读微信文档：<a href=\"https://developers.weixin.qq.com/miniprogram/dev/framework/ability/darkmode.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://developers.weixin.qq.com/miniprogram/dev/framework/ability/darkmode.html</a></p>\n\n\n<p class=\"feishu-p\">MPFlutter 通过 MPFlutterDarkmodeManager 类提供信息，可实现以下能力：</p>\n\n<ul class=\"feishu-ul\">\n<li>检测当前用户屏幕是否为暗色模式</li>\n<li>监听暗色、浅色模式变化</li>\n</ul>\n\n\n<h4 id=\"heading-dark_mode-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-dark_mode-2\" class=\"heading-anchor\">#</a>暗色模式主题</h4>\n\n\n<p class=\"feishu-p\">需要配合 Material DarkMode Theme 使用，参考代码如下：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">@override\n  Widget build(BuildContext context) {\n    return material.MaterialApp(\n      darkTheme: material.ThemeData(\n        useMaterial3: true,\n        appBarTheme: material.AppBarTheme(\n          color: material.Colors.black,\n          foregroundColor: material.Colors.grey,\n          elevation: 5.0,\n          centerTitle: false,\n        ),\n        platform: material.TargetPlatform.iOS,\n      ),\n      theme: material.ThemeData(\n        useMaterial3: true,\n        appBarTheme: material.AppBarTheme(\n          color: material.Colors.blue,\n          foregroundColor: material.Colors.white,\n          elevation: 5.0,\n          centerTitle: false,\n        ),\n        platform: material.TargetPlatform.iOS,\n      ),\n      themeMode: MPFlutterDarkmodeManager.isDarkmode()\n          ? material.ThemeMode.dark\n          : material.ThemeMode.light,\n);</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">监听暗色、浅色变化：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">MPFlutterDarkmodeManager.addThemeListener(() {\n  // Theme 变化，使用 setState 等方式要求 MaterialApp 刷新。\n});</code></pre>\n                </div>\n\n\n\n<h4 id=\"heading-dark_mode-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-dark_mode-3\" class=\"heading-anchor\">#</a>微信小程序配置</h4>\n\n\n<p class=\"feishu-p\">你需要在 app.json 中设置 darkmode: true 才可以启用暗色主题，同时需要在 window 中去掉 backgroundTextStyle 和 navigationBarTextStyle 配置。</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-dark_mode-1", "title": "6.10 Dark Mode 暗色模式适配", "level": 2}, {"id": "heading-dark_mode-2", "title": "暗色模式主题", "level": 4}, {"id": "heading-dark_mode-3", "title": "微信小程序配置", "level": 4}], "wordCount": 1821, "readTime": 6, "file": "微信小程序平台特性_Dark Mode 适配_HR2RwgXLgi4Vwek9lyWc1q4Un2g.html"}, {"id": "order_center", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "微信小程序订单中心页接入", "icon": "🛒", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-order_center-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-order_center-1\" class=\"heading-anchor\">#</a>6.11 微信小程序订单中心页接入</h2>\n\n\n<p class=\"feishu-p\">该功能未发布，请使用 Nightly 版本。</p>\n\n\n<p class=\"feishu-p\">针对微信官方《<a href=\"https://developers.weixin.qq.com/community/develop/doc/00046880140f2842cdee491545b801?highLine=%25E8%25AE%25A2%25E5%258D%2595%25E4%25B8%25AD%25E5%25BF%2583\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">关于小程序订单中心页设置的公告</a>》要求，我们提供以下构建方案。</p>\n\n\n<p class=\"feishu-p\">1.修改 scripts/build_wechat.dart，添加以下构建选项：</p>\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">javascript</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-javascript\">build_tools.addShadowPage(&#x27;order&#x27;);</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">2.然后在 MPFlutterWechatAppDelegate 中，使用 launchOptions[\"path\"] 获取页面路径，判断是否为 pages/index/order 响应跳转。</p>\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">MPFlutterWechatAppDelegate(\n      onLaunch: (query, options) {\n            final path = options[&#x27;path&#x27;];\n            if (path == &quot;pages/index/order&quot;) {\n              // 订单中心页\n            }\n      },\n)\n    </code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">3.添加 pages/index/order 路径到微信小程序后台评论</p>\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-order_center-1", "title": "6.11 微信小程序订单中心页接入", "level": 2}], "wordCount": 992, "readTime": 3, "file": "微信小程序平台特性_订单中心页_W0qnwZPPkiO5PTk7RbscZX9bn4e.html"}, {"id": "socket", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "Socket 与 WebSocket 通信", "icon": "🔄", "date": "2024年6月26日", "html": "\n<h2 id=\"heading-socket-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-socket-1\" class=\"heading-anchor\">#</a>6.12 Socket 与 WebSocket 通信</h2>\n\n\n\n<h3 id=\"heading-socket-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-socket-2\" class=\"heading-anchor\">#</a>Socket</h3>\n\n\n<p class=\"feishu-p\">使用 mpflutter_wechat_socket 库可以在微信小程序上与服务器使用 TCPSocket 通信，官方是基于微信提供的 API 进行封装的，请注意域名配置和端口号限制。</p>\n\n\n<p class=\"feishu-p\">相关文档：<a href=\"https://developers.weixin.qq.com/miniprogram/dev/api/network/tcp/wx.createTCPSocket.html\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://developers.weixin.qq.com/miniprogram/dev/api/network/tcp/wx.createTCPSocket.html</a></p>\n\n\n\n<h5 id=\"heading-socket-3\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-socket-3\" class=\"heading-anchor\">#</a>使用方法</h5>\n\n\n<p class=\"feishu-p\">添加依赖到 pubspec.yaml 中：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">\n  mpflutter_wechat_socket: ^0.0.1</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">在需要通信的地方，编写以后代码：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:mpflutter_wechat_socket/mpflutter_wechat_socket.dart&#x27;;\n\nMPFlutter_Wechat_Socket.connect(&#x27;127.0.0.1&#x27;, 1234).then((socket) {\n  print(&#x27;Connected to server&#x27;);\n\n  // 发送测试数据\n  socket.write(&#x27;Hello, server!&#x27;);\n\n  // 监听服务器返回的数据\n  socket.listen((data) {\n    print(&#x27;Received from server: $data&#x27;);\n  }, onDone: () {\n    print(&#x27;Server closed the connection&#x27;);\n    socket.destroy();\n  }, onError: (error) {\n    print(&#x27;Error: $error&#x27;);\n    socket.destroy();\n  });\n\n  // 关闭连接\n  Future.delayed(Duration(seconds: 5), () {\n    print(&#x27;Closing connection&#x27;);\n    socket.close();\n  });\n}).catchError((error) {\n  print(&#x27;Error connecting to server: $error&#x27;);\n});</code></pre>\n                </div>\n\n\n\n<h3 id=\"heading-socket-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-socket-3\" class=\"heading-anchor\">#</a>WebSocket</h3>\n\n\n<p class=\"feishu-p\">web_socket_channel 是常用的 websocket client 库，MPFlutter 官方通过 Fork 的方式在 web_socket_channel 的基础上添加微信小程序支持。</p>\n\n\n<p class=\"feishu-p\">同样的，开发者也需要注意相关的域名和端口限制。0 字</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-socket-1", "title": "6.12 Socket 与 WebSocket 通信", "level": 2}, {"id": "heading-socket-2", "title": "Socket", "level": 3}, {"id": "heading-socket-3", "title": "WebSocket", "level": 3}], "wordCount": 1662, "readTime": 5, "file": "微信小程序平台特性_Socket、WebSocket_R56vwolrriKQCOkjJ6pcCX1Bnaf.html"}, {"id": "imsdk", "chapterId": "chap_wechat_features", "chapterTitle": "七、微信小程序平台特性", "title": "在微信小程序中使用 Tencent IMSDK", "icon": "💬", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-imsdk-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-imsdk-1\" class=\"heading-anchor\">#</a>6.13 在微信小程序中使用 Tencent IMSDK</h2>\n\n\n<p class=\"feishu-p\">腾讯云 IMSDK 支持 Flutter 和微信小程序使用，在 MPFlutter 中同样可用。</p>\n\n\n<p class=\"feishu-p\">本文档将指引你集成并运行 IMSDK。</p>\n\n\n<p class=\"feishu-p\">1.下载模板工程 <a href=\"https://mpflutter.feishu.cn/wiki/I45wwTI9XiH0AXkvQUEc2jZ8nFP\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">编写第一个 MPFlutter 微信小程序</a></p>\n\n<p class=\"feishu-p\">2.在 scripts/build_wechat.dart 文件中添加以下配置</p>\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">javascript</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-javascript\">import &#x27;package:mpflutter_build_tools/main.dart&#x27; as build_tools;\n\n\n  final buildArgs = [...arguments]..add(&#x27;--wechat&#x27;);\n  build_tools.addNpmPackage(&quot;TencentCloudChat&quot;, &quot;@tencentcloud/chat&quot;);\n  build_tools.main(buildArgs);\n}\n</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">3.在 pubspec.yaml 添加以下依赖</p>\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">\n  tencent_cloud_chat_sdk: ^8.5.6864+10</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">4.在 wechat 目录下添加对应的 npm 包，并构建成 miniprogram_npm 包，具体方法参照。</p>\n\n<p class=\"feishu-p\">5.在 main.dart 或任意位置使用 Flutter 代码初始化 IMSDK，具体参数见<a href=\"https://cloud.tencent.com/document/product/269/75293\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">官方文档</a>。</p>\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">class MyApp extends StatelessWidget {\n  MyApp({super.key}) {\n    TencentImSDKPlugin.v2TIMManager.initSDK(\n        sdkAppID: 0); // 在这里初始化 IMSDK，后续的使用与正常的腾讯云 IMSDK Flutter 版本无任何差异。\n  }\n}</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">6.后续的使用与 <a href=\"https://cloud.tencent.com/document/product/269/75293\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">IMSDK Flutter 版本</a>无任何差异。</p>\n\n<p class=\"feishu-p\">如果你不想自行构建 npm，可以直接下载这个模板工程，已经集成好 IMSDK。</p>\n\n\n<p class=\"feishu-p\">注意，在上线前你需要按照腾讯云的要求配置好<a href=\"https://cloud.tencent.com/document/product/269/75285\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">业务域名</a>。0 字</p>\n\n\n", "headings": [{"id": "heading-imsdk-1", "title": "6.13 在微信小程序中使用 Tencent IMSDK", "level": 2}], "wordCount": 1592, "readTime": 5, "file": "微信小程序平台特性_在微信小程序中使用 Tencent IMSDK_DUehwuNAOiwYnzkESl4cApJ3nWc.html"}, {"id": "wegame_features", "chapterId": "chap_wegame_features", "chapterTitle": "八、微信小游戏平台特性", "title": "微信小游戏平台特性概述", "icon": "🎮", "date": "2024年4月21日", "html": "\n<h2 id=\"heading-wegame_features-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-wegame_features-1\" class=\"heading-anchor\">#</a>七、微信小游戏平台特性</h2>\n\n\n", "headings": [{"id": "heading-wegame_features-1", "title": "七、微信小游戏平台特性", "level": 2}], "wordCount": 16, "readTime": 1, "file": "12_微信小游戏平台特性_M2kpwyJx6i6NNckjO2pcxPepn0g.html"}, {"id": "wegame_api", "chapterId": "chap_wegame_features", "chapterTitle": "八、微信小游戏平台特性", "title": "微信小游戏 API 封装库 (mpflutter_wegame_api)", "icon": "🕹️", "date": "2024年4月21日", "html": "\n<h2 id=\"heading-wegame_api-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-wegame_api-1\" class=\"heading-anchor\">#</a>7.1 微信小游戏 API 封装库 (mpflutter_wegame_api)</h2>\n\n\n<p class=\"feishu-p\">微信小游戏提供了一系统的 API，可用于获取以下能力：</p>\n\n<ul class=\"feishu-ul\">\n<li>基础信息</li>\n<li>网络</li>\n<li>本地文件读写</li>\n<li>蓝牙</li>\n<li>支付</li>\n<li>......</li>\n</ul>\n\n<p class=\"feishu-p\">你可以通过微信官方文档了解</p>\n\n\n<p class=\"feishu-p\"><a href=\"https://developers.weixin.qq.com/minigame/dev/api/\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://developers.weixin.qq.com/minigame/dev/api/</a></p>\n\n\n\n<h4 id=\"heading-wegame_api-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-wegame_api-2\" class=\"heading-anchor\">#</a>封装库</h4>\n\n\n<p class=\"feishu-p\">对于 MPFlutter 应用，如果每一个 API 的调用都需要开发者自行编写 Channel，那是非常麻烦的。</p>\n\n\n<p class=\"feishu-p\">我们特别提供了 <a href=\"https://pub.dev/packages/mpflutter_wegame_api\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">mpflutter_wegame_api</a> 库，这个库提供了 Dart 的调用封装，你不需要编写任何 JavaScript 代码就可以调用微信 API。</p>\n\n\n<p class=\"feishu-p\">添加以下依赖到 pubspec.yaml 就可以使用了：</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">\n  mpflutter_wegame_api: {请自行替换成最新版本号}</code></pre>\n                </div>\n\n\n\n<h4 id=\"heading-wegame_api-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-wegame_api-3\" class=\"heading-anchor\">#</a>示例代码</h4>\n\n\n<p class=\"feishu-p\">对于同步返回方法，你可以直接获取结果。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:mpflutter_wegame_api/mpflutter_wegame_api.dart&#x27;;\n\nfinal result = wx.getSystemInfoSync();\nprint(result.model);</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">对于异步返回方法以及带参数的方法，你需要使用 .. 的方法设置 Option 参数。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">dart</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-dart\">import &#x27;package:mpflutter_wegame_api/mpflutter_wegame_api.dart&#x27;;\n\nwx.getSystemInfoAsync(GetSystemInfoAsyncOption()\n      ..success = (result) {\n        final snackBar = SnackBar(\n          content: Text(&#x27;Device model = ${result.model}&#x27;),\n        );\n        ScaffoldMessenger.of(context).showSnackBar(snackBar);\n      });</code></pre>\n                </div>\n\n\n", "headings": [{"id": "heading-wegame_api-1", "title": "7.1 微信小游戏 API 封装库 (mpflutter_wegame_api)", "level": 2}, {"id": "heading-wegame_api-2", "title": "封装库", "level": 4}, {"id": "heading-wegame_api-3", "title": "示例代码", "level": 4}], "wordCount": 1622, "readTime": 5, "file": "微信小游戏平台特性_微信小游戏 API 封装库_TCIHwggmsiJ7JZkcJRNcHELEnfe.html"}, {"id": "license_support", "chapterId": "chap_license_support", "chapterTitle": "九、商用授权、创业计划与技术支持", "title": "商用授权与去除 UNLICENSE 角标", "icon": "💼", "date": "2024年10月1日", "html": "\n<h2 id=\"heading-license_support-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-license_support-1\" class=\"heading-anchor\">#</a>8.1 商用授权与去除 UNLICENSE 角标</h2>\n\n\n<p class=\"feishu-p\">目前 MPFlutter 2.0 已取消收费，你可以自由使用。</p>\n\n\n\n<h4 id=\"heading-license_support-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-license_support-2\" class=\"heading-anchor\">#</a>我可以去掉未授权（UNLICENSE）角标吗？</h4>\n\n\n<p class=\"feishu-p\">可以，你可以自由去掉，请通过以下方式去除，修改 scripts/build_wechat.dart。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">javascript</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-javascript\">import &#x27;package:mpflutter_build_tools/main.dart&#x27; as build_tools;\n\n  final buildArgs = [...arguments]..add(&#x27;--wechat&#x27;);\n  build_tools.licenseGrant = true;\n  build_tools.main(buildArgs);\n}</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">MPFlutter 2.0 版本并不是一个完全开源（代码开源、商用付费）的项目，如果你使用 MPFlutter 开发的小程序、小游戏需要用于商业目的，需要购买商用授权。</p>\n\n\n\n<h4 id=\"heading-license_support-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-license_support-3\" class=\"heading-anchor\">#</a>商业目的定义</h4>\n\n<ul class=\"feishu-ul\">\n<li>面向企业内部的应用，属于商业目的，需要购买授权。</li>\n<li>面向公众的应用，属于商业目的，需要购买授权。</li>\n<li>目标用户只包括开发者自己，无任何营利目的，不需要购买授权。</li>\n<li>目标用户是以教学演示、内部研究为目的的小程序、小游戏，不需要购买授权。</li>\n<li>小程序、小游戏关联实体是自然人，并且小程序、小游戏没有增加任何广告，未用于盈利目的，不需要购买授权，这种行为需要联系作者备案，会提供免费授权证书。</li>\n</ul>\n\n\n<h4 id=\"heading-license_support-4\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-license_support-4\" class=\"heading-anchor\">#</a>个人开发者创业支持计划</h4>\n\n\n<p class=\"feishu-p\">针对个人开发者创业需求，特制定该计划，如果同时满足以下条件，可以申请免费授权：</p>\n\n<ul class=\"feishu-ul\">\n<li>小程序、小游戏认证主体为个人；</li>\n<li>年度广告收入不超过人民币 1000 元（本计划允许放置广告）；</li>\n<li>在掘金、Bilibili、知乎等平台，发表与该小程序相关的文章并提及 MPFlutter，默认授权 MPFlutter 团队转载你的文章。</li>\n</ul>\n\n<p class=\"feishu-p\">详情请阅读 <a href=\"https://mpflutter.feishu.cn/wiki/SH4dwtMpPi0m14kMMCkcaIyWnuh\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">个人开发者创业支持计划</a></p>\n\n\n\n<h4 id=\"heading-license_support-5\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-license_support-5\" class=\"heading-anchor\">#</a>授权方式</h4>\n\n<ul class=\"feishu-ul\">\n<li>MPFlutter 的授权是针对单个 appId 授予的，每一个上线的小程序、小游戏都需要购买一次授权。</li>\n<li>授权是无期限的，单个 appId 购买授权后就可以一直使用。</li>\n<li>授权是不可转让的，只能服务于购买时指定的 appId。</li>\n</ul>\n\n\n<h4 id=\"heading-license_support-6\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-license_support-6\" class=\"heading-anchor\">#</a>价格</h4>\n\n\n<p class=\"feishu-p\">一个 appId 永久授权价格 ￥300.00</p>\n\n\n<p class=\"feishu-p\">授权包含以下服务：</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-license_support-1", "title": "8.1 商用授权与去除 UNLICENSE 角标", "level": 2}, {"id": "heading-license_support-2", "title": "我可以去掉未授权（UNLICENSE）角标吗？", "level": 4}, {"id": "heading-license_support-3", "title": "商业目的定义", "level": 4}, {"id": "heading-license_support-4", "title": "个人开发者创业支持计划", "level": 4}, {"id": "heading-license_support-5", "title": "授权方式", "level": 4}, {"id": "heading-license_support-6", "title": "价格", "level": 4}], "wordCount": 1238, "readTime": 4, "file": "13_商用授权购买_KEL9wIQ7ji4ChmkFnTfcIvJPnzb.html"}, {"id": "startup_program", "chapterId": "chap_license_support", "chapterTitle": "九、商用授权、创业计划与技术支持", "title": "个人开发者创业支持计划", "icon": "🤝", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-startup_program-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-startup_program-1\" class=\"heading-anchor\">#</a>8.2 个人开发者创业支持计划</h2>\n\n\n\n<h4 id=\"heading-startup_program-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-startup_program-2\" class=\"heading-anchor\">#</a>前提条件</h4>\n\n\n<p class=\"feishu-p\">针对个人开发者创业需求，特制定该计划，如果同时满足以下条件，可以申请免费授权：</p>\n\n<ul class=\"feishu-ul\">\n<li>小程序、小游戏认证主体为个人；</li>\n<li>年度广告收入不超过人民币 1000 元（本计划允许放置广告）；</li>\n<li>在掘金、Bilibili、知乎等平台，发表与该小程序相关的文章并提及 MPFlutter，默认授权 MPFlutter 团队转载你的文章。</li>\n</ul>\n\n\n<h4 id=\"heading-startup_program-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-startup_program-3\" class=\"heading-anchor\">#</a>授权申请方式</h4>\n\n\n<p class=\"feishu-p\">请通过微信添加 PonyCui@MPFlutter 咨询。</p>\n\n\n\n\n<div class=\"article-image-box\">\n                <img src=\"./images/startup_support_qr.jpeg\" alt=\"image\" class=\"zoomable-img\" onclick=\"openLightbox('./images/startup_support_qr.jpeg', 'image')\" />\n                <div class=\"image-caption\">image</div>\n            </div>\n\n<p class=\"feishu-p\">创业计划授权期限为一年，可申请续期，续期时如果仍然满足前提条件，可继续免费申请。</p>\n\n\n<p class=\"feishu-p\">自 2024 年 1 月 1 日起已付费购买授权的，可申请退款。</p>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-startup_program-1", "title": "8.2 个人开发者创业支持计划", "level": 2}, {"id": "heading-startup_program-2", "title": "前提条件", "level": 4}, {"id": "heading-startup_program-3", "title": "授权申请方式", "level": 4}], "wordCount": 371, "readTime": 1, "file": "14_个人开发者创业支持计划_SH4dwtMpPi0m14kMMCkcaIyWnuh.html"}, {"id": "tech_support", "chapterId": "chap_license_support", "chapterTitle": "九、商用授权、创业计划与技术支持", "title": "技术支持与交流渠道", "icon": "💬", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-tech_support-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-tech_support-1\" class=\"heading-anchor\">#</a>8.3 技术支持与交流渠道</h2>\n\n\n\n<h4 id=\"heading-tech_support-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-tech_support-2\" class=\"heading-anchor\">#</a>BUG 反馈方式</h4>\n\n\n<p class=\"feishu-p\">请直接联系 PonyCui@MPFlutter 私信提 BUG，也可以直接在 <a href=\"https://github.com/mpflutter/mpflutter/issues\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">GitHub</a> 上提 Issue。</p>\n\n\n<p class=\"feishu-p\">提 BUG 要求，使用飞书文档创建 <a href=\"https://weypl4zsnv.feishu.cn/wiki/SaOSwFEtEiG7XkkmBftc67Jxnee\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">BUG 模板</a>  副本，填好问题答案再私信。</p>\n\n\n\n\n<div class=\"article-image-box\">\n                <img src=\"./images/tech_support_qr.jpeg\" alt=\"image\" class=\"zoomable-img\" onclick=\"openLightbox('./images/tech_support_qr.jpeg', 'image')\" />\n                <div class=\"image-caption\">image</div>\n            </div>\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-tech_support-1", "title": "8.3 技术支持与交流渠道", "level": 2}, {"id": "heading-tech_support-2", "title": "BUG 反馈方式", "level": 4}], "wordCount": 190, "readTime": 1, "file": "15_技术支持_EXg0w88B7iCZkbkzGkscZtWlnZf.html"}, {"id": "bug_template", "chapterId": "chap_license_support", "chapterTitle": "九、商用授权、创业计划与技术支持", "title": "标准 BUG 反馈模板", "icon": "🐛", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-bug_template-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-bug_template-1\" class=\"heading-anchor\">#</a>8.4 标准 BUG 反馈模板</h2>\n\n\n<p class=\"feishu-p\">文档编写完成后，参考<<a href=\"https://www.feishu.cn/hc/zh-CN/articles/360049067493-%E5%B0%86%E6%96%87%E6%A1%A3%E5%88%86%E4%BA%AB%E7%BB%99%E4%BC%81%E4%B8%9A%E5%A4%96%E9%83%A8%E4%BA%BA%E5%91%98\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">方式三：将云文档设置为获得链接可见</a>>分享给 MPFlutter 成员。</p>\n\n\n<p class=\"feishu-p\">如果不希望使用链接分享，保密要求较高，你可以直接将内容和 zip 包以邮件形式发送到 <a href=\"mailto:service@mpflutter.com\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">service@mpflutter.com</a></p>\n\n\n\n<h4 id=\"heading-bug_template-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-bug_template-2\" class=\"heading-anchor\">#</a>保密要求</h4>\n\n\n<p class=\"feishu-p\">保密 BUG 将不会添加到公开 List 中</p>\n\n\n<p class=\"feishu-p\">是否保密？</p>\n\n\n\n<h4 id=\"heading-bug_template-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-bug_template-3\" class=\"heading-anchor\">#</a>开发环境（必填）</h4>\n\n\n<p class=\"feishu-p\">Flutter 版本号：</p>\n\n\n<p class=\"feishu-p\">MPFlutter 版本号：</p>\n\n\n<p class=\"feishu-p\">操作系统：</p>\n\n\n<p class=\"feishu-p\">IDE：</p>\n\n\n\n<h4 id=\"heading-bug_template-4\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-bug_template-4\" class=\"heading-anchor\">#</a>问题描述（必填）</h4>\n\n\n<p class=\"feishu-p\">请具体描述问题的复现方法，如果有错误堆栈及错误码也贴到这里</p>\n\n\n\n<h4 id=\"heading-bug_template-5\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-bug_template-5\" class=\"heading-anchor\">#</a>问题工程文件（可选）</h4>\n\n\n<p class=\"feishu-p\">请使用 zip 打包工程文件，上传到这里，请不要打包 build 和 .dart_tool 目录</p>\n\n\n<p class=\"feishu-p\">推荐内容由 AI 生成</p>\n\n\n", "headings": [{"id": "heading-bug_template-1", "title": "8.4 标准 BUG 反馈模板", "level": 2}, {"id": "heading-bug_template-2", "title": "保密要求", "level": 4}, {"id": "heading-bug_template-3", "title": "开发环境（必填）", "level": 4}, {"id": "heading-bug_template-4", "title": "问题描述（必填）", "level": 4}, {"id": "heading-bug_template-5", "title": "问题工程文件（可选）", "level": 4}], "wordCount": 362, "readTime": 1, "file": "技术支持_BUG 模板_SaOSwFEtEiG7XkkmBftc67Jxnee.html"}, {"id": "version_info", "chapterId": "chap_version_info", "chapterTitle": "十、版本信息与更新日志 (ChangeLog)", "title": "版本信息与更新日志 (2.0.0 ~ 2.8.0)", "icon": "📋", "date": "2025年3月25日", "html": "\n<h2 id=\"heading-version_info-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-version_info-1\" class=\"heading-anchor\">#</a>九、版本信息与更新日志 (ChangeLog)</h2>\n\n\n<h2 id=\"heading-version_info-2\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-version_info-2\" class=\"heading-anchor\">#</a>9.1 稳定版本与发布说明</h2>\n\n\n\n<h4 id=\"heading-version_info-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-version_info-3\" class=\"heading-anchor\">#</a>稳定版本</h4>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">dependencies:\n  flutter:\n    sdk: flutter\n  mpflutter_core: 2.8.0 # Flutter 3.27 及以下版本请使用 -&gt; 2.7.8\n  mpflutter_build_tools: 2.8.0\n  mpflutter_wechat_api: 2.2.4 # 这是微信小程序 API\n  mpflutter_wegame_api: 2.5.0 # 这是微信小游戏 API</code></pre>\n                </div>\n\n\n\n<h5 id=\"heading-version_info-4\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-version_info-4\" class=\"heading-anchor\">#</a>ChangeLog</h5>\n\n\n\n<p class=\"feishu-p\">####### 2.8.0(2025-03-25)</p>\n\n\n<p class=\"feishu-p\">注意：Flutter 3.29 版本需要在 main.dart 中设置字体为 Noto Sans SC 才能正确显示中文。</p>\n\n\n\n\n\n<div class=\"feishu-code-block\">\n                    <div class=\"code-block-bar\">\n                        <span class=\"code-badge\">yaml</span>\n                        <button class=\"code-copy-btn\" onclick=\"copyCode(this)\">\n                            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg>\n                            <span>复制</span>\n                        </button>\n                    </div>\n                    <pre><code class=\"language-yaml\">material.MaterialApp(\n  theme: material.ThemeData(\n    fontFamily: &quot;Noto Sans SC&quot;,\n    fontFamilyFallback: const [&quot;Noto Sans SC&quot;],\n  )\n)</code></pre>\n                </div>\n\n\n<p class=\"feishu-p\">新增功能：</p>\n\n<ul class=\"feishu-ul\">\n<li>支持 Flutter 3.29 版本</li>\n</ul>\n\n\n<p class=\"feishu-p\">####### 2.7.15(2025-2-8)</p>\n\n\n<p class=\"feishu-p\">修复问题：</p>\n\n<ul class=\"feishu-ul\">\n<li>Flutter 3.27 无法加载图片的问题</li>\n</ul>\n\n\n<p class=\"feishu-p\">####### 2.7.12(2025-1-26)</p>\n\n\n<p class=\"feishu-p\">修复问题：</p>\n\n<ul class=\"feishu-ul\">\n<li>支持 Flutter 3.27</li>\n<li>支持 NPM Package 定义</li>\n</ul>\n\n\n<p class=\"feishu-p\">####### 2.7.11(2025-1-11)</p>\n\n\n<p class=\"feishu-p\">修复问题：</p>\n\n<ul class=\"feishu-ul\">\n<li>支持微信小程序在鸿蒙系统上运行</li>\n</ul>\n\n\n<p class=\"feishu-p\">####### 2.7.10(2024-12-31)</p>\n\n\n<p class=\"feishu-p\">修复问题：</p>\n\n<ul class=\"feishu-ul\">\n<li>修正 PlatformView 在多次 Route 跳转后可能不再显示的问题</li>\n<li>修正使用微信小程序插件后白屏的问题</li>\n</ul>\n\n\n<h5 id=\"heading-version_info-4\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-version_info-4\" class=\"heading-anchor\">#</a>完整历史版本记录 (2.0.0 ~ 2.8.0)</h5>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<div class=\"table-container\"><table class=\"feishu-table\">\n<thead><tr><th>版本</th><th>发布日期</th><th>核心更新说明</th><th>适用 Flutter SDK</th></tr></thead>\n<tbody>\n<tr><td><strong>2.8.0</strong></td><td>2025-03-25</td><td>支持 Flutter 3.29，中文字体配置 <code class=\"inline-code\">Noto Sans SC</code></td><td>Flutter 3.29+</td></tr>\n<tr><td><strong>2.7.15</strong></td><td>2025-02-08</td><td>修复 Flutter 3.27 无法加载图片问题</td><td>Flutter 3.27</td></tr>\n<tr><td><strong>2.7.12</strong></td><td>2025-01-26</td><td>支持 Flutter 3.27，支持 NPM Package 定义</td><td>Flutter 3.27</td></tr>\n<tr><td><strong>2.7.11</strong></td><td>2025-01-11</td><td><strong>重磅：全面支持华为鸿蒙系统（HarmonyOS NEXT）微信小程序运行</strong></td><td>Flutter 3.16 ~ 3.27</td></tr>\n<tr><td><strong>2.7.10</strong></td><td>2024-12-31</td><td>修复 PlatformView 多次 Route 跳转显示异常，修复小程序插件白屏</td><td>Flutter 3.16 ~ 3.24</td></tr>\n<tr><td><strong>2.7.8</strong></td><td>2024-11-13</td><td>推荐稳定版（Flutter 3.27 及以下首选核心版本）</td><td>Flutter 3.16 ~ 3.24</td></tr>\n<tr><td><strong>2.7.7</strong></td><td>2024-10-29</td><td>智能分包算法升级与编译缓存优化</td><td>Flutter 3.16 ~ 3.24</td></tr>\n<tr><td><strong>2.7.6</strong></td><td>2024-09-24</td><td>提升 Skia WebGL 渲染稳定性与移动端内存释放效率</td><td>Flutter 3.16 ~ 3.24</td></tr>\n<tr><td><strong>2.7.5</strong></td><td>2024-07-30</td><td>修复特定机型下 Touch 事件偶发丢失问题</td><td>Flutter 3.16 ~ 3.22</td></tr>\n<tr><td><strong>2.7.4</strong></td><td>2024-07-28</td><td>优化静态资源文件分包加载效率</td><td>Flutter 3.16 ~ 3.22</td></tr>\n<tr><td><strong>2.7.3</strong></td><td>2024-07-23</td><td>增强 PlatformView 原生视图与 Flutter 页面通信机制</td><td>Flutter 3.16 ~ 3.22</td></tr>\n<tr><td><strong>2.7.0</strong></td><td>2024-07-09</td><td><strong>重磅：推出 Platform View Overlay 全屏同层覆盖方案</strong></td><td>Flutter 3.16 ~ 3.22</td></tr>\n<tr><td><strong>2.6.4</strong></td><td>2024-06-26</td><td>完善 WebSocket 自动重连机制与二进制 Stream 传输</td><td>Flutter 3.16 ~ 3.22</td></tr>\n<tr><td><strong>2.6.3</strong></td><td>2024-06-14</td><td>优化 MiniTex 免加载字体文本渲染器排版性能与首字渲染效率</td><td>Flutter 3.16 ~ 3.22</td></tr>\n<tr><td><strong>2.6.0</strong></td><td>2024-04-21</td><td><strong>重磅：全面支持微信小游戏平台特性</strong>，提供 mpflutter_wegame_api</td><td>Flutter 3.16 ~ 3.19</td></tr>\n<tr><td><strong>2.5.0</strong></td><td>2024-03-24</td><td>发布 mpflutter_wegame_api 2.5.0 游戏能力封装库</td><td>Flutter 3.16 ~ 3.19</td></tr>\n<tr><td><strong>2.4.2</strong></td><td>2024-03-12</td><td>优化 Dart2JS 编译产物，代码体积进一步缩减 15%</td><td>Flutter 3.16 ~ 3.19</td></tr>\n<tr><td><strong>2.4.0</strong></td><td>2024-03-10</td><td>增加智能分包与代码按需预下载支持</td><td>Flutter 3.16 ~ 3.19</td></tr>\n<tr><td><strong>2.3.2</strong></td><td>2024-03-03</td><td>修复特定 iOS 微信客户端版本偶发白屏异常</td><td>Flutter 3.16 ~ 3.19</td></tr>\n<tr><td><strong>2.3.1</strong></td><td>2024-02-18</td><td>优化高频触摸手势（GestureDetector）响应链路，降低延迟</td><td>Flutter 3.16</td></tr>\n<tr><td><strong>2.3.0</strong></td><td>2024-02-17</td><td>完善 audioplayers 音频播放库适配与事件回调</td><td>Flutter 3.16</td></tr>\n<tr><td><strong>2.2.0</strong></td><td>2024-01-29</td><td>推出 mpflutter_wechat_api 微信专属 API 库</td><td>Flutter 3.16</td></tr>\n<tr><td><strong>2.1.2</strong></td><td>2024-01-20</td><td>适配系统深色模式（Dark Mode）动态切换监听</td><td>Flutter 3.16</td></tr>\n<tr><td><strong>2.1.0</strong></td><td>2024-01-14</td><td>全面支持 Dark Mode 暗色模式适配能力</td><td>Flutter 3.16</td></tr>\n<tr><td><strong>2.0.2</strong></td><td>2024-01-08</td><td>初始稳定性优化与性能调优</td><td>Flutter 3.16</td></tr>\n<tr><td><strong>2.0.0</strong></td><td>2024-01-07</td><td><strong>MPFlutter 2.0 正式版重磅发布</strong>：基于 Skia + WebGL 渲染引擎重构，开发体验无限接近 Flutter 原生应用</td><td>Flutter 3.16</td></tr>\n</tbody></table></div>\n\n\n\n\n", "headings": [{"id": "heading-version_info-1", "title": "九、版本信息与更新日志 (ChangeLog)", "level": 2}, {"id": "heading-version_info-2", "title": "9.1 稳定版本与发布说明", "level": 2}, {"id": "heading-version_info-3", "title": "稳定版本", "level": 4}], "wordCount": 3046, "readTime": 10, "file": "16_版本信息_LBtYwgw3Yi0BQzk6XTIcLOVrnZc.html"}, {"id": "articles_and_cases", "chapterId": "chap_articles_and_cases", "chapterTitle": "十一、深度技术博文与精选案例", "title": "Blog Articles 深度技术博文与精选案例概述", "icon": "📝", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-articles_and_cases-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-articles_and_cases-1\" class=\"heading-anchor\">#</a>十、深度技术博文与精选案例</h2>\n\n\n", "headings": [{"id": "heading-articles_and_cases-1", "title": "十、深度技术博文与精选案例", "level": 2}], "wordCount": 18, "readTime": 1, "file": "17_Blog Articles_Bev8wGeWFiy8yWkBNYocdbaJnqh.html"}, {"id": "article_how", "chapterId": "chap_articles_and_cases", "chapterTitle": "十一、深度技术博文与精选案例", "title": "在微信小程序里运行完整的 Flutter，怎么做到的？", "icon": "🔬", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-article_how-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-article_how-1\" class=\"heading-anchor\">#</a>10.1 在微信小程序里运行完整的 Flutter，怎么做到的？</h2>\n\n\n\n<h4 id=\"heading-article_how-2\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-article_how-2\" class=\"heading-anchor\">#</a>背景</h4>\n\n\n<p class=\"feishu-p\">小程序是一种全新的业务形态，特别是微信小程序，既结合了 Web 动态化特性，又拥有 Native 丰富的设备能力支持。</p>\n\n\n<p class=\"feishu-p\">在微信这个宿主上，小程序不仅有稳定的分发渠道，更拥有完善的生命周期、数据、AI 能力支持。</p>\n\n\n<p class=\"feishu-p\">在该微信上开发小程序，一般使用以下两种方法：</p>\n\n<ul class=\"feishu-ul\">\n<li>JavaScript + WXML + WCSS</li>\n<li>Taro + React + JavaScript</li>\n</ul>\n\n<p class=\"feishu-p\">本文要介绍的是使用 Flutter Framework 开发小程序的方法，以及该方法背后的技术原理。</p>\n\n\n\n<h4 id=\"heading-article_how-3\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-article_how-3\" class=\"heading-anchor\">#</a>技术挑战</h4>\n\n\n<p class=\"feishu-p\">尽管 Flutter 官方已经提供 Flutter Web 实现，Flutter Web 本身就是基于 dart2js 运行的，微信小程序可以运行 JavaScript，在原理上跑起 Flutter Web 是没有问题的。</p>\n\n\n<p class=\"feishu-p\">但仍然存在以下技术挑战：</p>\n\n<ul class=\"feishu-ul\">\n<li>微信小程序没有 W3C 标准的 JavaScript 对象，Flutter Web 不能直接运行。</li>\n<li>微信小程序也没有 DOM 实现，Flutter Web HTML Renderer 不能直接渲染。</li>\n<li>微信小程序对包大小的限制十分严格，主包不能超过 2M，而 Flutter Web 所编译的 main.dart.js 初始体积就有 1.3 M，必须有合理的分包机制才能上传。</li>\n</ul>\n\n<p class=\"feishu-p\">我们在 MPFlutter 1.x 版本中，针对上述问题已有一定的探索，1.x 版本的解决方法如下：</p>\n\n<ul class=\"feishu-ul\">\n<li>使用微信开源的 kbone 库，模拟 W3C 实现，并通过模拟的 DOM 对象渲染出符合 WXML 要求的视图树。</li>\n<li>通过 Shadow Element Tree 的方式，使用 JSON 在 Dart 与 JavaScript 上下文同步视图树。</li>\n<li>Fork Flutter Framework，并对其进行外科手术式的裁剪，使 main.dart.js 初始体积降低到 600K。</li>\n</ul>\n\n<p class=\"feishu-p\">MPFlutter 1.x 方案已经良好的运行了两年，也收到了开发者非常多的反馈，开发者常诟病于裁剪后的 Flutter Framework 不兼容 Flutter 生态上的插件，同时 material 库也无法使用，需要从头开始编写 UI。</p>\n\n\n<p class=\"feishu-p\">在 MPFlutter 2.0 版本，我们重新思考在小程序上运行 Flutter 的最佳方式，并在最终使用 CanvasKit Renderer 解决以上全部问题。</p>\n\n\n\n<h4 id=\"heading-article_how-4\" class=\"doc-heading doc-heading-h4\"><a href=\"#heading-article_how-4\" class=\"heading-anchor\">#</a>技术方案</h4>\n\n\n\n<h5 id=\"heading-article_how-5\" class=\"doc-heading doc-heading-h5\"><a href=\"#heading-article_how-5\" class=\"heading-anchor\">#</a>Summary0 字</h5>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-article_how-1", "title": "10.1 在微信小程序里运行完整的 Flutter，怎么做到的？", "level": 2}, {"id": "heading-article_how-2", "title": "背景", "level": 4}, {"id": "heading-article_how-3", "title": "技术挑战", "level": 4}, {"id": "heading-article_how-4", "title": "技术方案", "level": 4}], "wordCount": 1093, "readTime": 3, "file": "Blog Articles_在微信小程序里运行完整的 Flutter，怎么做到的？_LWhrw3gVtiLkK0kSD99cweyjnXn.html"}, {"id": "article_video", "chapterId": "chap_articles_and_cases", "chapterTitle": "十一、深度技术博文与精选案例", "title": "【Flutter观察】MPFlutter 2.0 视频实战教程", "icon": "🎥", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-article_video-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-article_video-1\" class=\"heading-anchor\">#</a>10.2 【Flutter观察】MPFlutter 2.0 视频实战教程</h2>\n\n\n<p class=\"feishu-p\">来自 <a href=\"https://space.bilibili.com/3994931\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">MKings-One</a> 网友的分享</p>\n\n\n<p class=\"feishu-p\">你可能还想问 (6)你可能还想问 (6)⭐微信小程序运行完整Flutter的实现方法🌈版本信息：各稳定版本依赖及修复问题汇总📸MPFlutter使用Packages：可用、不可用及应对🛠️Image编码：MPFlutter的图片编码方法及使用指南🕹️自制微信小程序Package：开发、使用与发布指南🎮MiniTex文本渲染器使用方法：Flutter与Web应用推荐内容由 AI 生成</p>\n\n\n<ul class=\"feishu-ul\">\n<li>Bilibili 视频地址：<a href=\"https://space.bilibili.com/3994931\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">MKings-One MPFlutter 2.0 观察与上手实战</a></li>\n</ul>\n\n\n<hr class=\"feishu-hr\" />\n\n\n", "headings": [{"id": "heading-article_video-1", "title": "10.2 【Flutter观察】MPFlutter 2.0 视频实战教程", "level": 2}], "wordCount": 312, "readTime": 1, "file": "Blog Articles_【Flutter观察】MPFlutter 2.0：使用Flutter快速开发高性能微信小程序_GZ0XwofijisGgbk4zOIcxTPlnLc.html"}, {"id": "showcase", "chapterId": "chap_articles_and_cases", "chapterTitle": "十一、深度技术博文与精选案例", "title": "MPFlutter 精彩生产案例 (音途 / 像素小画家)", "icon": "🎨", "date": "2024年3月10日", "html": "\n<h2 id=\"heading-showcase-1\" class=\"doc-heading doc-heading-h2\"><a href=\"#heading-showcase-1\" class=\"heading-anchor\">#</a>10.3 MPFlutter 精彩生产案例</h2>\n\n\n<h3 id=\"heading-showcase-2\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-showcase-2\" class=\"heading-anchor\">#</a>像素小画家</h3>\n\n\n\n\n<div class=\"article-image-box\">\n                <img src=\"./images/case_pixel_painter.jpeg\" alt=\"像素小画家\" class=\"zoomable-img\" onclick=\"openLightbox('./images/case_pixel_painter.jpeg', '像素小画家')\" />\n                <div class=\"image-caption\">像素小画家</div>\n            </div>\n\n\n<p class=\"feishu-p\">一款好用的像素原教旨主义创作工具，基于 mpflutter2.0 构建，拥有优秀的性能，流畅的交互，更多功能持续更新中…</p>\n\n\n<h3 id=\"heading-showcase-3\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-showcase-3\" class=\"heading-anchor\">#</a>觅音之旅</h3>\n\n\n\n\n<div class=\"article-image-box\">\n                <img src=\"./images/case_music_journey_qr.png\" alt=\"觅音之旅小程序码\" class=\"zoomable-img\" onclick=\"openLightbox('./images/case_music_journey_qr.png', '觅音之旅小程序码')\" />\n                <div class=\"image-caption\">觅音之旅小程序码</div>\n            </div>\n\n\n<p class=\"feishu-p\">觅音将简约与宁静相结合，帮助您从快节奏中脱离，为您提供一个没有干扰的平静时空，保持专注、冥想片刻、放松思绪。</p>\n\n<ul class=\"feishu-ul\">\n<li><strong>源码开源地址</strong>：<a href=\"https://github.com/swiftdo/sound\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://github.com/swiftdo/sound</a></li>\n</ul>\n\n\n<h3 id=\"heading-showcase-4\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-showcase-4\" class=\"heading-anchor\">#</a>MPFlutter Wonderous</h3>\n\n\n\n\n<div class=\"article-image-box\">\n                <img src=\"./images/case_pixel_painter_qr.png\" alt=\"Wonderous 博物案例\" class=\"zoomable-img\" onclick=\"openLightbox('./images/case_pixel_painter_qr.png', 'Wonderous 博物案例')\" />\n                <div class=\"image-caption\">Wonderous 博物案例</div>\n            </div>\n\n\n<p class=\"feishu-p\">Wonderous 是一个博物展示类小程序，是 MPFlutter 官方示例小程序，原始应用由 gskinner 开发并开源。</p>\n\n<ul class=\"feishu-ul\">\n<li><strong>源码开源地址</strong>：<a href=\"https://github.com/mpflutter/flutter-wonderous-app/tree/mpflutter\" class=\"feishu-link\" target=\"_blank\" rel=\"noopener\">https://github.com/mpflutter/flutter-wonderous-app/tree/mpflutter</a></li>\n</ul>\n\n\n<h3 id=\"heading-showcase-5\" class=\"doc-heading doc-heading-h3\"><a href=\"#heading-showcase-5\" class=\"heading-anchor\">#</a>小周五子棋（小游戏）</h3>\n\n\n\n\n<div class=\"article-image-box\">\n                <img src=\"./images/case_music_journey.jpeg\" alt=\"小周五子棋游戏封面\" class=\"zoomable-img\" onclick=\"openLightbox('./images/case_music_journey.jpeg', '小周五子棋游戏封面')\" />\n                <div class=\"image-caption\">小周五子棋游戏封面</div>\n            </div>\n\n\n<p class=\"feishu-p\">《小周五子棋》是一款五子棋小游戏，可以好友对战、匹配对战、人机对战，也可以面对面双人推演。</p>\n\n\n", "headings": [{"id": "heading-showcase-1", "title": "10.3 MPFlutter 精彩生产案例", "level": 2}, {"id": "heading-showcase-2", "title": "像素小画家", "level": 3}, {"id": "heading-showcase-3", "title": "觅音之旅", "level": 3}, {"id": "heading-showcase-4", "title": "MPFlutter Wonderous", "level": 3}, {"id": "heading-showcase-5", "title": "小周五子棋（小游戏）", "level": 3}], "wordCount": 677, "readTime": 2, "file": "18_精彩案例_BGMNwe6dAiOr6Rkn2oycF9y5nab.html"}];
+        
+        // Keep the local mirror's first-page outline aligned with the Feishu source.
+        // These two headings are present in the source document's outline even though
+        // they currently contain no body blocks.
+        const overview = ARTICLES_DATA.find(article => article.id === "overview");
+        if (overview) {
+            overview.html += `
+<h3 id="heading-overview-5" class="doc-heading doc-heading-h3"><a href="#heading-overview-5" class="heading-anchor">#</a>完整的 API 生态配套</h3>
+<h3 id="heading-overview-6" class="doc-heading doc-heading-h3"><a href="#heading-overview-6" class="heading-anchor">#</a>下一步</h3>
+`;
+            overview.headings.push(
+                { id: "heading-overview-5", title: "完整的 API 生态配套", level: 3 },
+                { id: "heading-overview-6", title: "下一步", level: 3 }
+            );
+        }
+
+        let currentArticleId = "overview";
+        const articlesMap = {};
+        ARTICLES_DATA.forEach(a => { articlesMap[a.id] = a; });
+
+        // Initialize Tree
+        function renderSidebarTree() {
+            const navTree = document.getElementById("sidebarNavTree");
+            let html = "";
+            CHAPTERS_DATA.forEach(chap => {
+                html += `<div class="chapter-group" id="${chap.id}">
+                    <div class="chapter-header" onclick="toggleChapter('${chap.id}')">
+                        <div class="chapter-header-left">
+                            <span>${chap.icon}</span>
+                            <span>${chap.title}</span>
+                        </div>
+                        <svg class="chapter-caret" viewBox="0 0 1024 1024"><path d="M831.872 340.777L512 652.672 192.128 340.777a32 32 0 0 0-45.12 45.44l342.4 333.568a32 32 0 0 0 45.184 0l342.4-333.568a32 32 0 0 0-45.12-45.44z"></path></svg>
+                    </div>
+                    <div class="chapter-items">`;
+                
+                chap.items.forEach(item => {
+                    const art = articlesMap[item.id];
+                    html += `<div class="article-nav-item" id="nav-${item.id}" onclick="switchArticle('${item.id}')">
+                        <span class="article-item-icon">${item.icon}</span>
+                        <span class="article-item-title" title="${item.title}">${item.title}</span>
+                    </div>`;
+                });
+                
+                html += `</div></div>`;
+            });
+            navTree.innerHTML = html;
+        }
+
+        function toggleChapter(chapId) {
+            const group = document.getElementById(chapId);
+            if (group) {
+                group.classList.toggle("collapsed");
+            }
+        }
+
+        // Switch active article
+        function switchArticle(aid, hash) {
+            const art = articlesMap[aid];
+            if (!art) return;
+
+            currentArticleId = aid;
+            window.location.hash = aid;
+
+            // Highlight sidebar item
+            document.querySelectorAll(".article-nav-item").forEach(el => el.classList.remove("active"));
+            const activeNav = document.getElementById("nav-" + aid);
+            if (activeNav) {
+                activeNav.classList.add("active");
+                // ensure parent chapter expanded
+                const parentGroup = activeNav.closest(".chapter-group");
+                if (parentGroup) parentGroup.classList.remove("collapsed");
+            }
+
+            // Update Breadcrumb
+            document.getElementById("breadcrumbArea").innerHTML = `<span>/</span> <span>${art.chapterTitle}</span> <span>/</span> <strong>${art.title}</strong>`;
+
+            // Calculate Prev & Next
+            const curIdx = ARTICLES_DATA.findIndex(a => a.id === aid);
+            const prevArt = curIdx > 0 ? ARTICLES_DATA[curIdx - 1] : null;
+            const nextArt = curIdx < ARTICLES_DATA.length - 1 ? ARTICLES_DATA[curIdx + 1] : null;
+
+            let prevNextHtml = `<div class="article-footer-nav">`;
+            if (prevArt) {
+                prevNextHtml += `<a href="#${prevArt.id}" class="nav-btn-box" onclick="switchArticle('${prevArt.id}')">
+                    <span class="nav-btn-label">← 上一篇</span>
+                    <span class="nav-btn-title">${prevArt.icon} ${prevArt.title}</span>
+                </a>`;
+            } else {
+                prevNextHtml += `<div></div>`;
+            }
+            if (nextArt) {
+                prevNextHtml += `<a href="#${nextArt.id}" class="nav-btn-box" style="text-align:right" onclick="switchArticle('${nextArt.id}')">
+                    <span class="nav-btn-label">下一篇 →</span>
+                    <span class="nav-btn-title">${nextArt.icon} ${nextArt.title}</span>
+                </a>`;
+            } else {
+                prevNextHtml += `<div></div>`;
+            }
+            prevNextHtml += `</div>`;
+
+            // Render main viewport
+            const viewport = document.getElementById("articleViewport");
+            viewport.innerHTML = `
+                <div class="article-meta-header">
+                    <div class="article-badge-row">
+                        <span class="badge-chapter">${art.chapterTitle}</span>
+                        <span class="badge-updated">最近更新: ${art.date}</span>
+                    </div>
+                    <h1 class="article-h1-title">${art.icon} ${art.title}</h1>
+                    <div class="article-stats-bar">
+                        <div class="stat-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>阅读时间约 ${art.readTime} 分钟</span>
+                        </div>
+                        <div class="stat-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            <span>全文约 ${art.wordCount} 字</span>
+                        </div>
+                        <div class="stat-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                            <span>已支持离线阅读与代码复制</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-body-content">
+                    ${art.html}
+                </div>
+                ${prevNextHtml}
+            `;
+
+            // Render outline
+            renderOutline(art.headings);
+
+            // Scroll to top or specific anchor
+            if (hash) {
+                setTimeout(() => {
+                    const target = document.getElementById(hash);
+                    if (target) target.scrollIntoView({ behavior: "smooth" });
+                }, 50);
+            } else {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        }
+
+        // Render Right Outline (TOC)
+        function renderOutline(headings) {
+            const outlineList = document.getElementById("outlineList");
+            if (!headings || headings.length === 0) {
+                outlineList.innerHTML = `<li class="outline-item" style="color:var(--text-tertiary); font-size:12px; padding:8px;">暂无子章节</li>`;
+                return;
+            }
+            let html = "";
+            headings.forEach(h => {
+                html += `<li class="outline-item level-${h.level}">
+                    <a href="#${h.id}" class="outline-link" id="toc-${h.id}" onclick="scrollToHeading('${h.id}', event)">${h.title}</a>
+                </li>`;
+            });
+            outlineList.innerHTML = html;
+            setupScrollSpy();
+        }
+
+        function scrollToHeading(hid, e) {
+            e.preventDefault();
+            const el = document.getElementById(hid);
+            if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+                document.querySelectorAll(".outline-link").forEach(l => l.classList.remove("active"));
+                const tocEl = document.getElementById("toc-" + hid);
+                if (tocEl) tocEl.classList.add("active");
+            }
+        }
+
+        // ScrollSpy
+        let scrollSpyObserver = null;
+        function setupScrollSpy() {
+            if (scrollSpyObserver) scrollSpyObserver.disconnect();
+            const headingEls = document.querySelectorAll(".doc-heading");
+            if (!headingEls.length) return;
+
+            scrollSpyObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        document.querySelectorAll(".outline-link").forEach(l => l.classList.remove("active"));
+                        const activeToc = document.getElementById("toc-" + id);
+                        if (activeToc) activeToc.classList.add("active");
+                    }
+                });
+            }, { rootMargin: "-80px 0px -70% 0px" });
+
+            headingEls.forEach(h => scrollSpyObserver.observe(h));
+        }
+
+        // Copy Code Block
+        function copyCode(btn) {
+            const codeBlock = btn.closest(".feishu-code-block");
+            const codeEl = codeBlock.querySelector("code");
+            if (!codeEl) return;
+            const text = codeEl.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.innerHTML;
+                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00b07c" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <span style="color:#00b07c">已复制</span>`;
+                showToast("已成功复制到剪贴板 ✓");
+                setTimeout(() => { btn.innerHTML = orig; }, 2000);
+            }).catch(err => {
+                showToast("复制失败，请手动选择复制");
+            });
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toastMsg");
+            t.querySelector("span").innerText = msg;
+            t.classList.add("show");
+            setTimeout(() => { t.classList.remove("show"); }, 2500);
+        }
+
+        // Lightbox
+        function openLightbox(src, alt) {
+            const modal = document.getElementById("lightboxModal");
+            const img = document.getElementById("lightboxImg");
+            img.src = src;
+            img.alt = alt || "";
+            modal.classList.add("open");
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightboxModal").classList.remove("open");
+        }
+
+        // Sidebar live filter
+        function filterSidebar(query) {
+            const q = query.trim().toLowerCase();
+            document.querySelectorAll(".chapter-group").forEach(group => {
+                let matchCount = 0;
+                group.querySelectorAll(".article-nav-item").forEach(item => {
+                    const title = item.innerText.toLowerCase();
+                    if (!q || title.includes(q)) {
+                        item.style.display = "flex";
+                        matchCount++;
+                    } else {
+                        item.style.display = "none";
+                    }
+                });
+                if (q && matchCount > 0) {
+                    group.classList.remove("collapsed");
+                    group.style.display = "block";
+                } else if (q && matchCount === 0) {
+                    group.style.display = "none";
+                } else {
+                    group.style.display = "block";
+                }
+            });
+        }
+
+        // Search Modal
+        function openSearchModal() {
+            const modal = document.getElementById("searchModal");
+            modal.classList.add("open");
+            const input = document.getElementById("modalSearchInput");
+            input.value = "";
+            input.focus();
+            document.getElementById("searchResultsList").innerHTML = `<div class="search-empty-state">输入关键字即可实时全文检索 42 篇技术文章与代码段</div>`;
+        }
+
+        function closeSearchModal(e) {
+            if (e && e.target !== document.getElementById("searchModal")) return;
+            document.getElementById("searchModal").classList.remove("open");
+        }
+
+        function handleSearchQuery(query) {
+            const q = query.trim().toLowerCase();
+            const resultsContainer = document.getElementById("searchResultsList");
+            if (!q) {
+                resultsContainer.innerHTML = `<div class="search-empty-state">输入关键字即可实时全文检索 42 篇技术文章与代码段</div>`;
+                return;
+            }
+
+            const hits = [];
+            ARTICLES_DATA.forEach(art => {
+                const plainTitle = art.title.toLowerCase();
+                const plainHtml = art.html.replace(/<[^>]+>/g, " ");
+                const lowerText = plainHtml.toLowerCase();
+
+                let score = 0;
+                if (plainTitle.includes(q)) score += 10;
+                const matchPos = lowerText.indexOf(q);
+                if (matchPos !== -1) {
+                    score += 5;
+                    const start = Math.max(0, matchPos - 40);
+                    const end = Math.min(lowerText.length, matchPos + 80);
+                    const snippetRaw = plainHtml.substring(start, end).trim();
+                    const snippet = snippetRaw.replace(new RegExp(q, "gi"), match => `<mark>${match}</mark>`);
+                    hits.push({ art, score, snippet });
+                } else if (score > 0) {
+                    hits.push({ art, score, snippet: art.title });
+                }
+            });
+
+            hits.sort((a, b) => b.score - a.score);
+
+            if (hits.length === 0) {
+                resultsContainer.innerHTML = `<div class="search-empty-state">未找到包含 "<strong>${htmlEscape(query)}</strong>" 的文档</div>`;
+                return;
+            }
+
+            let html = "";
+            hits.slice(0, 15).forEach(h => {
+                html += `<div class="search-result-item" onclick="selectSearchResult('${h.art.id}')">
+                    <div class="search-result-chapter">${h.art.chapterTitle}</div>
+                    <div class="search-result-title">${h.art.icon} ${h.art.title}</div>
+                    <div class="search-result-snippet">...${h.snippet}...</div>
+                </div>`;
+            });
+            resultsContainer.innerHTML = html;
+        }
+
+        function selectSearchResult(aid) {
+            document.getElementById("searchModal").classList.remove("open");
+            switchArticle(aid);
+        }
+
+        function htmlEscape(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const cur = document.documentElement.getAttribute("data-theme");
+            const next = cur === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("mpflutter_theme", next);
+            updateThemeIcon(next);
+        }
+
+        function updateThemeIcon(theme) {
+            document.getElementById("themeIcon").innerText = theme === "dark" ? "☀️" : "🌓";
+        }
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+                e.preventDefault();
+                openSearchModal();
+            }
+            if (e.key === "Escape") {
+                closeSearchModal();
+                closeLightbox();
+            }
+        });
+
+        // Bootstrap on load
+        window.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem("mpflutter_theme") || "light";
+            document.documentElement.setAttribute("data-theme", savedTheme);
+            updateThemeIcon(savedTheme);
+
+            renderSidebarTree();
+
+            // Hash router
+            const hash = window.location.hash.replace("#", "");
+            if (hash && articlesMap[hash]) {
+                switchArticle(hash);
+            } else {
+                switchArticle("overview");
+            }
+        });
+    </script>
+</body>
+</html>

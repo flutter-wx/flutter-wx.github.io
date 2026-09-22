@@ -67,7 +67,7 @@ const HomeSplash = () => {
         <div
           className={classnames(styles.heroButtons, "name", "margin-vert--md")}
         >
-          <Button href="https://weypl4zsnv.feishu.cn/wiki/TayPw6pxKiZGdxkNe4bcmSnNnSg">
+          <Button href={useBaseUrl("mpflutter-2.0/index.html")}>
             快速开始
           </Button>
         </div>
