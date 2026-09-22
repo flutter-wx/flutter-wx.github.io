@@ -59,7 +59,7 @@ const HomeSplash = () => {
       <div className="container">
         <img
           className={classnames(styles.heroBannerLogo, "margin-vert--md")}
-          src={"img/logo.png"}
+          src={useBaseUrl("img/logo.png")}
           alt="MPFlutter"
         />
         <h1 className="hero__title">{siteConfig.title}</h1>
@@ -91,7 +91,7 @@ const Index = () => {
                     "padding-horiz--md"
                   )}
                 >
-                  <img src={image} className={classnames(styles.blockImage)} />
+                  <img src={useBaseUrl(image)} className={classnames(styles.blockImage)} />
                   <h2>{title}</h2>
                   <p>{content}</p>
                 </div>
