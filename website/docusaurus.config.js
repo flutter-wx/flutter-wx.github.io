@@ -29,9 +29,9 @@ const siteConfig = {
   title: "MPFlutter",
   tagline: "Flutter 小程序开发框架",
   organizationName: "flutter-wx",
-  projectName: "mpflutter.github.io",
+  projectName: "flutter-wx.github.io",
   url: "https://flutter-wx.github.io",
-  baseUrl: process.env.BASE_URL || "/mpflutter.github.io/zh/",
+  baseUrl: process.env.BASE_URL || "/zh/",
   favicon: "img/favicon.png",
   themeConfig: {
     prism: {

@@ -34,7 +34,7 @@ jobs:
         env:
           NODE_OPTIONS: --openssl-legacy-provider
         run: |
-          echo "export const baseUrl = 'https://flutter-wx.github.io/mpflutter.github.io';" > docs/0-url.mdx
+          echo "export const baseUrl = 'https://flutter-wx.github.io';" > docs/0-url.mdx
           cd website
           npm install --legacy-peer-deps
           npm run build
