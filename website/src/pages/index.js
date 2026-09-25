@@ -38,14 +38,29 @@ const contents = [
 ];
 
 const Button = ({ children, href }) => {
+  const isStaticHtml =
+    typeof href === "string" &&
+    (href.includes(".html") ||
+      href.startsWith("http://") ||
+      href.startsWith("https://"));
+
   return (
     <div className="col col--2 margin-horiz--sm">
-      <Link
-        className="button button--outline button--primary button--lg"
-        to={href}
-      >
-        {children}
-      </Link>
+      {isStaticHtml ? (
+        <a
+          className="button button--outline button--primary button--lg"
+          href={href}
+        >
+          {children}
+        </a>
+      ) : (
+        <Link
+          className="button button--outline button--primary button--lg"
+          to={href}
+        >
+          {children}
+        </Link>
+      )}
     </div>
   );
 };
@@ -67,7 +82,7 @@ const HomeSplash = () => {
         <div
           className={classnames(styles.heroButtons, "name", "margin-vert--md")}
         >
-          <Button href={useBaseUrl("mpflutter-2.0/index.html")}>
+          <Button href={useBaseUrl("mpflutter-2.0/index.html#overview")}>
             快速开始
           </Button>
         </div>

@@ -1599,7 +1599,7 @@
         });
 
         // Bootstrap on load
-        window.addEventListener("DOMContentLoaded", () => {
+        function initApp() {
             const savedTheme = localStorage.getItem("mpflutter_theme") || "light";
             document.documentElement.setAttribute("data-theme", savedTheme);
             updateThemeIcon(savedTheme);
@@ -1612,6 +1612,19 @@
                 switchArticle(hash);
             } else {
                 switchArticle("overview");
+            }
+        }
+
+        if (document.readyState === "loading") {
+            window.addEventListener("DOMContentLoaded", initApp);
+        } else {
+            initApp();
+        }
+
+        window.addEventListener("hashchange", () => {
+            const hash = window.location.hash.replace("#", "");
+            if (hash && articlesMap[hash] && hash !== currentArticleId) {
+                switchArticle(hash);
             }
         });
     </script>
